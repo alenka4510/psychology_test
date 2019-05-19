@@ -20,7 +20,7 @@ class Test{
     this.task = new Task();
     this.rightAnswers = 0;
     this.nextTaskWithContext = this.nextTask.apply(this);
-    //this.nextTaskTimeout = setInterval(this.nextTaskWithContext, this.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
+    this.nextTaskTimeout = setInterval(this.nextTask.bind(this), this.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
   };
 
   nextTask() {
@@ -55,7 +55,7 @@ class Test{
     }
 
     this.task.addTaskImage(this.task.image);
-    this.nextTaskTimeout = setTimeout(this.nextTask.bind(this), this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
+    //this.nextTaskTimeout = setTimeout(this.nextTask.bind(this), this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
 
    /* this.nextTaskTimeout = setTimeout(function() {
       this.nextTask();
