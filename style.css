@@ -1,13 +1,10 @@
 .content
 {
-	width:1000px;
-	height:600px;
+	width: 90%;
+	height: 90%;
 	padding:50px;
-	background:url("03.jpg");
-	margin:40px auto;	
-	background-size:cover;
-	border-radius:20px;
-	position:relative;
+	margin:40px auto;
+	position:absolute;
 }
 .content:after
 {
@@ -34,10 +31,23 @@
 .play 
 {	
 	position: relative;
-	margin-top:180px;
-	left:34%;
+	left: 50%;
 	font-size: 40px;
 	font-weight: 700;
+	margin-top: 15%;
+	cursor:pointer;
+	display: inline-block;
+	color: #ffffff !important;
+	text-decoration: none;
+	text-shadow: 0 -1px 2px rgba(0,0,0,.2);
+	padding: .5em 1em;
+	outline: none;
+	border-radius: 3px;
+	background: linear-gradient(#2C85F2, #4B95F0) rgb(110,112,120);
+	box-shadow:
+			0 1px rgba(255,255,255,.2) inset,
+			0 3px 5px rgba(0,1,6,.5),
+			0 0 1px 1px rgba(0,1,6,.2);
 }
 .next
 {
@@ -133,12 +143,12 @@
 }
 .next-test
 {
-	top:70%;
+	top:50%;
 	display:none;
 	width:120px;
-	position:absolute;
+	position:relative;
 	font-size:22px;
-	left:44%;
+	left:50%;
 	border:0;
 	color:#fff;
 	text-decoration: none;
@@ -427,14 +437,14 @@
 
 .leftBtn
 {
-	top:70%;
 	display:none;
 	width:120px;
-	position:absolute;
+	position:relative;
 	font-size:22px;
-	left:44%;
+	left:20%;
 	border:0;
 	color:#fff;
+	margin-top: 20px;
 	text-decoration: none;
 	text-shadow: 0 -1px 2px rgba(0,0,0,.2);
 	padding: .5em 1em;
@@ -448,15 +458,15 @@
 }
 .rightBtn
 {
-	top:70%;
 	display:none;
 	width:120px;
-	position:absolute;
+	position:relative;
 	font-size:22px;
-	left:59%;
+	left:30%;
 	border:0;
 	color:#fff;
 	text-decoration: none;
+	margin-top: 20px;
 	text-shadow: 0 -1px 2px rgba(0,0,0,.2);
 	padding: .5em 1em;
 	outline: none;
@@ -469,14 +479,22 @@
 }
 #task
 {
-	top:20%;
+	top:0;
 	display:none;
 	width:500px;
 	height:300px;
-	position:absolute;
-	left:34%;
+	position:relative;
+	left:0;
 	border:1px solid black;
 	border-radius: 3px;
+}
+#workPlace
+{
+	position: absolute;
+	top: 20%;
+	left: 25%;
+	width:500px;
+	height:500px;
 }
 #ans
 {
@@ -487,5 +505,31 @@
 	position:absolute;
 	left:34%;
 	border:1px solid black;
+	border-radius: 3px;
+}
+#test_countdown
+{
+	display: block;
+	position: relative;
+	margin-top: 40px;
+
+	width:400px;
+	font-size:22px;
+	color:black;
+	text-shadow: 0 -1px 2px rgba(0,0,0,.2);
+	outline: none;
+	border-radius: 3px;
+}
+#result
+{
+	display: block;
+	position: relative;
+	margin-top: 40px;
+
+	width:400px;
+	font-size:22px;
+	color:black;
+	text-decoration: none;
+	outline: none;
 	border-radius: 3px;
 }
