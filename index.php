@@ -1,7 +1,7 @@
 <link href="style.css" rel="stylesheet">	
 <link href="timerCss.css" rel="stylesheet">
 <div class="content">
-	<div class="butt play" id="play"> 
+	<div class="play" id="play">
 		Начать тест
 	</div>
 	
@@ -37,16 +37,22 @@
 	
 	<p class="result"></p>
 
-	<div id = "task"></div>
+    <div id='workPlace'>
+        <div id = "task"></div>
 
-	<div><input class="leftBtn"  type = "button" value = "Кошка" ></div>
-	<div><input class="rightBtn"  type = "button" value = "Собака"></div>
-    <div>
-        <span id='test_countdown'></span>
+        <div>
+            <input class="leftBtn"  type = "button" value = "Кошка" name = "cat" >
+            <input class="rightBtn"  type = "button" value = "Собака" name = "dog">
+        </div>
+        <div>
+            <span id='test_countdown'></span>
+        </div>
+        <div>
+            <span id='result'></span>
+        </div>
     </div>
-    <div>
-        <span id='result'></span>
-    </div>
+
+
 	<div class="img check"></div>
 	<div class="img close"></div>
 	<input class="next-test"  type = "button" value = "Далее">

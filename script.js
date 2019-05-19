@@ -1,21 +1,194 @@
+class Test{
+
+  testStartTime;
+  nextTaskTimeout;
+  level;
+  task;
+
+  constructor(){
+    this.AMOUNT_TIME_FOR_TEST_IN_SECONDS = 15;
+    this.KEYCODE_LEFT_BUTTON = 37;
+    this.KEYCODE_RIGHT_BUTTON = 39;
+    this.testCountdownElement = $('#test_countdown');
+    this.leftButton = $('.leftBtn');
+    this.rightButton = $('.rightBtn');
+    this.testStartTime;
+    this.leastTimeForTest = this.AMOUNT_TIME_FOR_TEST_IN_SECONDS;
+    this.testIsEnded = false;
+    this.timer = new Timer(this);
+    this.getDataTest();
+    this.task = new Task();
+    this.rightAnswers = 0;
+
+  };
+
+  nextTask() {
+    console.log("next task!!!");
+    if (this.testIsEnded) {
+      return;
+    }
+
+    if (this.task.audio) {
+      this.task.audio.pause();
+    }
+
+    this.task.clearTaskImage();
+    this.task.clearTask();
+    let index = this.selfRandom(0, this.tasks.length - 1);
+
+    const task = this.tasks[index];
+    const taskFile = this.tasks[index].fileName;
+    if (taskFile === null) {
+      return;
+    }
+
+    let taskFileImage = taskFile;
+    if (taskFile.split('.')[1] === 'mp3') {
+      this.task.playAudio(taskFile);
+      this.task.type = task.type;
+      this.task.image = this.task.audioImage;
+    }
+    else{
+      this.task.image = taskFileImage;
+    }
+
+    this.task.addTaskImage(this.task.image);
+    this.nextTaskTimeout = setTimeout(this.nextTask, this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
+  };
+
+  checkAnswerProcess(answer) {
+    if (this.checkAnswer(answer)) {
+      this.rightAnswers++;
+    }
+
+    clearTimeout(this.nextTaskTimeout);
+    this.nextTask();
+  }
+
+  checkAnswer(btnName) {
+    return btnName === this.task.type;
+  }
+
+  getDataTest() {
+    this.tasks = new Array(
+        /*{fileName: 'taskC1.jpg', type: "cat"},
+        {fileName: 'taskC2.jpg', type: "cat"},
+        {fileName: 'taskC3.jpg', type: "cat"},
+        {fileName: 'taskC4.jpg', type: "cat"},
+        {fileName: 'taskD5.jpg', type: "dog"},
+        {fileName: 'taskD6.jpg', type: "dog"},
+        {fileName: 'taskD7.jpg', type: "dog"},
+        {fileName: 'taskD8.jpg', type: "dog"},*/
+        {fileName: '01001.mp3', type: "dog"},
+        {fileName: '04453.mp3', type: "cat"},
+        {fileName: '01004.mp3', type: "dog"},
+        {fileName: '00988.mp3', type: "cat"}
+    );
+
+    this.images = new Array(
+        {fileName: 'taskC1.jpg', type: "cat"},
+        {fileName: 'taskC4.jpg', type: "cat"},
+        {fileName: 'taskD5.jpg', type: "dog"},
+        {fileName: 'taskD8.jpg', type: "dog"}
+    );
+
+    this.audios = new Array(
+        {fileName: '01001.mp3', type: "dog"},
+        {fileName: '04453.mp3', type: "cat"},
+        {fileName: '01004.mp3', type: "dog"},
+        {fileName: '00988.mp3', type: "cat"}
+    );
+  };
+
+  onTestCountdownEnded(){
+    this.testIsEnded = true;
+    if (nextTaskTimeout) {
+      clearTimeout(nextTaskTimeout);
+    }
+
+    myAudio.pause();
+
+    $('#result').html(`Количество правильных ответов: ${rightAnswers}`);
+    console.log('test time ended');
+  };
+
+  selfRandom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  renderTestCountdown() {
+    this.testCountdownElement.html(`Осталось ${this.leastTimeForTest} секунд`);
+  };
+
+}
+
+class Task{
+  type;
+  audioImage = './audio.jpg';
+  image;
+  constructor(){
+    this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS = 3 * 1000;
+    this.audio = new Audio;
+  };
+
+  clearTask(){
+    this.type = null;
+    this.image = null;
+  };
+
+  playAudio(fileName) {
+    this.audio.src = fileName;
+    this.audio.play();
+  };
+
+  clearTaskImage() {
+    $('#task').empty();
+  };
+
+  addTaskImage(img) {
+    $('#task').prepend('<img id="ImgTask" src="' + img + '" width="500" height="300" />');
+  };
+}
+
+class Timer{
+  constructor(test) {
+    this.testStartTime = new moment();
+    this.test = test;
+    this.test.renderTestCountdown();
+    this.testCountdown(test.leastTimeForTest);
+  };
+
+  testCountdown() {
+    const countdownInterval = setInterval(() => {
+      this.test.leastTimeForTest = this.test.leastTimeForTest - 1;
+      this.test.renderTestCountdown();
+      if (this.test.leastTimeForTest <= 0 ) {
+        clearInterval(countdownInterval);
+        this.onTestCountdownEnded();
+      }
+    }, 1000);
+  };
+
+  onTestCountdownEnded() {
+    this.test.testIsEnded = true;
+    if (this.test.nextTaskTimeout) {
+      clearTimeout(this.test.nextTaskTimeout);
+    }
+
+    this.test.task.audio.pause();
+
+    $('#result').html(`Количество правильных ответов: ${this.test.rightAnswers}`);
+    console.log('test time ended');
+  };
+}
+
+
+
 $(document).ready(function () {
-  const AMOUNT_TIME_FOR_TEST_IN_SECONDS = 15;
-  const AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS = 3 * 1000;
   const KEYCODE_LEFT_BUTTON = 37;
   const KEYCODE_RIGHT_BUTTON = 39;
-  const FILE_TYPE_AUDIO = 'audio';
-  const testCountdownElement = $('#test_countdown');
   const leftButton = $('.leftBtn');
   const rightButton = $('.rightBtn');
-  const myAudio = new Audio;
-
-  let testStartTime;
-  let leastTimeForTest = AMOUNT_TIME_FOR_TEST_IN_SECONDS;
-  let nextTaskTimeout;
-  let currentFile = {};
-  let rightAnswers = 0;
-  let testIsEnded = false;
-
   //начать тестирование
   $('#play').on('click', startTest);
 
@@ -25,14 +198,14 @@ $(document).ready(function () {
     $('.next').delay(1000).fadeIn(300);
   }
 
-  function initTestCountdown() {
+  /*function initTestCountdown() {
     testStartTime = new moment();
     renderTestCountdown();
     testCountdown();
   }
 
   function renderTestCountdown() {
-    testCountdownElement.html(`Least ${leastTimeForTest} seconds`);
+    testCountdownElement.html(`Осталось ${leastTimeForTest} секунд`);
   }
 
   function testCountdown() {
@@ -56,22 +229,22 @@ $(document).ready(function () {
       myAudio.pause();
     }
 
-    $('#result').html(`right answers count: ${rightAnswers}`);
+    $('#result').html(`Количество правильных ответов: ${rightAnswers}`);
     console.log('test time ended');
-  }
+  }*/
 
   $('#next').on('click', function () {
-    initTestCountdown();
-    initEventListeners();
-    const { images, tasks, audios } = getDataTest();
-    // TODO: refactor this function
     hideAndShowElements();
+    test = new Test();
+    initEventListeners();
+    // TODO: refactor this function
 
     index = 0;							//индекс задачи
-    var col = 20;						//количество тасков
+    var col = 20;
     var level = $('#levels').val();		//уровень теста
 
-    nextTask();
+    test.level = $('#levels').val();
+    test.nextTask();
 
     function initEventListeners() {
       document.addEventListener("keydown", onKeyDown);
@@ -80,21 +253,21 @@ $(document).ready(function () {
     }
 
     function checkLeftButtonAnswer() {
-      checkAnswerProcess(0);
+      test.checkAnswerProcess(this.name);
     }
 
     function checkRightButtonAnswer() {
-      checkAnswerProcess(1);
+      test.checkAnswerProcess(this.name);
     }
 
-    function checkAnswerProcess(answer) {
+   /* function checkAnswerProcess(answer) {
       if (checkAnswer(answer)) {
         rightAnswers++;
       }
 
       clearTimeout(nextTaskTimeout);
       nextTask();
-    }
+    }*/
 
     function nextTaskLevel2(myAudio, btnFlag) {
       if (myAudio != null)
@@ -118,11 +291,11 @@ $(document).ready(function () {
 
     }
 
-    function checkAnswer(btnFlag) {
+    /*function checkAnswer(btnFlag) {
       console.log({ btnFlag, index, tasks: tasks[index] });
       const prevTask = tasks[index];
       return btnFlag === prevTask.fl;
-    }
+    }*/
 
     function onKeyDown(e) {
       switch (e.keyCode) {
@@ -143,7 +316,7 @@ $(document).ready(function () {
     }
 
     //Новая задача
-    function nextTask() {
+   /* function nextTask() {
       if (testIsEnded) {
         return;
       }
@@ -170,9 +343,9 @@ $(document).ready(function () {
 
       addTaskImage(taskFileImage);
       nextTaskTimeout = setTimeout(nextTask, AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
-    }
+    }*/
 
-    function clearTaskImage() {
+    /*function clearTaskImage() {
       $('#task').empty();
     }
 
@@ -182,23 +355,8 @@ $(document).ready(function () {
 
     function addTaskImage(img) {
       $('#task').prepend('<img id="ImgTask" src="' + img + '" width="500" height="300" />');
-    }
+    }*/
 
-    function runTest() {
-      nextTask();
-
-
-      /*$('.left').prop('disabled', true);
-       $('.right').prop('disabled', true);
-       alert("Тест закончен, количество правильных ответов " + rightAnswers);
-       return;*/
-
-    }
-
-    function playAudio(fileName) {
-      myAudio.src = fileName;
-      myAudio.play();
-    }
   });
 
 
