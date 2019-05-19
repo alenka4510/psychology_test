@@ -15,11 +15,12 @@ class Test{
     this.testStartTime;
     this.leastTimeForTest = this.AMOUNT_TIME_FOR_TEST_IN_SECONDS;
     this.testIsEnded = false;
-    this.timer = new Timer(this);
+    this.timer;
     this.getDataTest();
     this.task = new Task();
     this.rightAnswers = 0;
-
+    this.nextTaskWithContext = this.nextTask.apply(this);
+    //this.nextTaskTimeout = setInterval(this.nextTaskWithContext, this.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
   };
 
   nextTask() {
@@ -50,10 +51,16 @@ class Test{
     }
     else{
       this.task.image = taskFileImage;
+      this.task.type = task.type;
     }
 
     this.task.addTaskImage(this.task.image);
-    this.nextTaskTimeout = setTimeout(this.nextTask, this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
+    this.nextTaskTimeout = setTimeout(this.nextTask.bind(this), this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
+
+   /* this.nextTaskTimeout = setTimeout(function() {
+      this.nextTask();
+    }.bind(this), this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);*/
+    //this.nextTaskTimeout = setTimeout(this.nextTaskWithContext, this.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
   };
 
   checkAnswerProcess(answer) {
@@ -71,14 +78,14 @@ class Test{
 
   getDataTest() {
     this.tasks = new Array(
-        /*{fileName: 'taskC1.jpg', type: "cat"},
+        {fileName: 'taskC1.jpg', type: "cat"},
         {fileName: 'taskC2.jpg', type: "cat"},
         {fileName: 'taskC3.jpg', type: "cat"},
         {fileName: 'taskC4.jpg', type: "cat"},
         {fileName: 'taskD5.jpg', type: "dog"},
         {fileName: 'taskD6.jpg', type: "dog"},
         {fileName: 'taskD7.jpg', type: "dog"},
-        {fileName: 'taskD8.jpg', type: "dog"},*/
+        {fileName: 'taskD8.jpg', type: "dog"},
         {fileName: '01001.mp3', type: "dog"},
         {fileName: '04453.mp3', type: "cat"},
         {fileName: '01004.mp3', type: "dog"},
@@ -182,8 +189,6 @@ class Timer{
   };
 }
 
-
-
 $(document).ready(function () {
   const KEYCODE_LEFT_BUTTON = 37;
   const KEYCODE_RIGHT_BUTTON = 39;
@@ -235,6 +240,11 @@ $(document).ready(function () {
 
   $('#next').on('click', function () {
     hideAndShowElements();
+
+    /*$('#notice').html("3");
+    setTimeout(function() { $('#notice').html("2"); },1000);
+    setTimeout(function() { $('#notice').html("1"); },2000);*/
+
     test = new Test();
     initEventListeners();
     // TODO: refactor this function
@@ -245,6 +255,7 @@ $(document).ready(function () {
 
     test.level = $('#levels').val();
     test.nextTask();
+    test.timer = new Timer(test);
 
     function initEventListeners() {
       document.addEventListener("keydown", onKeyDown);
@@ -405,18 +416,12 @@ $(document).ready(function () {
   function hideAndShowElements() {
     $('#b1').fadeOut(500);
     //$(this).fadeOut(500);
-    $('#three').delay(1000).fadeIn(500);
-    $('#three').delay(500).fadeOut(500);
-    $('#two').delay(2500).fadeIn(500);
-    $('#two').delay(500).fadeOut(500);
-    $('#one').delay(4000).fadeIn(500);
-    $('#one').delay(500).fadeOut(500);
+
     $('.info').delay(4500).fadeOut(500);
 
     $('.leftBtn').delay(1000).fadeIn(500);
     $('.rightBtn').delay(1000).fadeIn(500);
     $('#task').delay(1000).fadeIn(500);
-    $('#ans').delay(1000).fadeIn(500);
   }
 
 

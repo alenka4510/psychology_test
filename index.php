@@ -30,9 +30,7 @@
 	
 	
 	<div class="info"> 
-		<b id="three">3</b>
-		<b id="two" >2</b>
-		<b id="one" >1</b>
+		<b id="notice"></b>
 	</div>
 	
 	<p class="result"></p>
