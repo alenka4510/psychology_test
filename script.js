@@ -6,7 +6,7 @@ class Test{
   task;
 
   constructor(){
-    this.AMOUNT_TIME_FOR_TEST_IN_SECONDS = 15;
+    this.AMOUNT_TIME_FOR_TEST_IN_SECONDS = 2;
     this.KEYCODE_LEFT_BUTTON = 37;
     this.KEYCODE_RIGHT_BUTTON = 39;
     this.testCountdownElement = $('#test_countdown');
@@ -107,17 +107,6 @@ class Test{
     );
   };
 
-  onTestCountdownEnded(){
-    this.testIsEnded = true;
-    if (nextTaskTimeout) {
-      clearTimeout(nextTaskTimeout);
-    }
-
-    myAudio.pause();
-
-    $('#result').html(`Количество правильных ответов: ${rightAnswers}`);
-    console.log('test time ended');
-  };
 
   selfRandom(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -183,8 +172,18 @@ class Timer{
     }
 
     this.test.task.audio.pause();
+      $('.leftBtn').delay(1000).fadeOut(500);
+      $('.rightBtn').delay(1000).fadeOut(500);
+      $('#task').delay(1000).fadeOut(500);
+      $('#test_countdown').delay(1000).fadeOut(500);
+      $('#b2').delay(1000).fadeIn(300);
+      $('#reset').delay(1000).fadeIn(300);
+      $('#backToTest').delay(1000).fadeIn(300);
+      $('#nextLevel').delay(1000).fadeIn(300);
 
-    $('#result').html(`Количество правильных ответов: ${this.test.rightAnswers}`);
+      $(".percent").html(`Количество правильных ответов: ${rightAnswers}`);
+
+    //$('#result').html(`Количество правильных ответов: ${this.test.rightAnswers}`);
     console.log('test time ended');
   };
 }
@@ -203,47 +202,8 @@ $(document).ready(function () {
     $('.next').delay(1000).fadeIn(300);
   }
 
-  /*function initTestCountdown() {
-    testStartTime = new moment();
-    renderTestCountdown();
-    testCountdown();
-  }
-
-  function renderTestCountdown() {
-    testCountdownElement.html(`Осталось ${leastTimeForTest} секунд`);
-  }
-
-  function testCountdown() {
-    const countdownInterval = setInterval(() => {
-      leastTimeForTest = leastTimeForTest - 1;
-      renderTestCountdown();
-      if (leastTimeForTest <= 0 ) {
-        clearInterval(countdownInterval);
-        onTestCountdownEnded();
-      }
-    }, 1000)
-  }
-
-  function onTestCountdownEnded() {
-    testIsEnded = true;
-    if (nextTaskTimeout) {
-      clearTimeout(nextTaskTimeout);
-    }
-
-    if (currentFile && currentFile.type === FILE_TYPE_AUDIO) {
-      myAudio.pause();
-    }
-
-    $('#result').html(`Количество правильных ответов: ${rightAnswers}`);
-    console.log('test time ended');
-  }*/
-
   $('#next').on('click', function () {
     hideAndShowElements();
-
-    /*$('#notice').html("3");
-    setTimeout(function() { $('#notice').html("2"); },1000);
-    setTimeout(function() { $('#notice').html("1"); },2000);*/
 
     test = new Test();
     initEventListeners();
@@ -271,15 +231,6 @@ $(document).ready(function () {
       test.checkAnswerProcess(this.name);
     }
 
-   /* function checkAnswerProcess(answer) {
-      if (checkAnswer(answer)) {
-        rightAnswers++;
-      }
-
-      clearTimeout(nextTaskTimeout);
-      nextTask();
-    }*/
-
     function nextTaskLevel2(myAudio, btnFlag) {
       if (myAudio != null)
         myAudio.pause();
@@ -302,12 +253,6 @@ $(document).ready(function () {
 
     }
 
-    /*function checkAnswer(btnFlag) {
-      console.log({ btnFlag, index, tasks: tasks[index] });
-      const prevTask = tasks[index];
-      return btnFlag === prevTask.fl;
-    }*/
-
     function onKeyDown(e) {
       switch (e.keyCode) {
         case KEYCODE_LEFT_BUTTON: {
@@ -325,48 +270,6 @@ $(document).ready(function () {
         }
       }
     }
-
-    //Новая задача
-   /* function nextTask() {
-      if (testIsEnded) {
-        return;
-      }
-
-      if (currentFile && currentFile.type === FILE_TYPE_AUDIO) {
-        myAudio.pause();
-      }
-
-      clearTaskImage();
-      resetCurrentFile();
-      index = selfRandom(0, tasks.length - 1);
-
-      const taskFile = tasks[index].fileName;
-      if (taskFile === null) {
-        return;
-      }
-
-      let taskFileImage = taskFile;
-      if (taskFile.split('.')[1] === 'mp3') {
-        playAudio(taskFile);
-        taskFileImage = './audio.jpg';
-        currentFile = { type: FILE_TYPE_AUDIO, val: taskFile };
-      }
-
-      addTaskImage(taskFileImage);
-      nextTaskTimeout = setTimeout(nextTask, AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
-    }*/
-
-    /*function clearTaskImage() {
-      $('#task').empty();
-    }
-
-    function resetCurrentFile() {
-      currentFile = {};
-    }
-
-    function addTaskImage(img) {
-      $('#task').prepend('<img id="ImgTask" src="' + img + '" width="500" height="300" />');
-    }*/
 
   });
 
@@ -415,7 +318,6 @@ $(document).ready(function () {
 
   function hideAndShowElements() {
     $('#b1').fadeOut(500);
-    //$(this).fadeOut(500);
 
     $('.info').delay(4500).fadeOut(500);
 

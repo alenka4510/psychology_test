@@ -54,7 +54,7 @@
 	<div class="img check"></div>
 	<div class="img close"></div>
 	<input class="next-test"  type = "button" value = "Далее">
-	<!--div class="wrap">
+	<div class="wrap">
 			
 			<div class="bar">
 				<div class="progress">
@@ -72,14 +72,14 @@
 	 <div class="block2" id="b2">
 		<p class="finish">Тест окончен</p>
 		<div class="rules"> 
-		
 			<img src="like.png" width="80">
 			<p class="percent"></p>
 		</div>
-		<input class="butt restart" type = "submit" id="res" value = "Заново"> 
-		<a href="/tests/" class="butt return-tests" id="list">Назад к тестам</a> 
+		<input class="butt restart" type = "submit" id="reset" value = "Заново">
+		<input class="butt nextLevel" type = "submit" id="nextLevel" value = "Следующий уровень">
+		<a href="/tests/" class="butt return-tests" id="backToTest">Назад к тестам</a>
 		
-	</div-->
+	</div>
 </div>
 
 <script src="jquery-3.3.1.min.js"></script>
