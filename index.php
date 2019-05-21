@@ -14,17 +14,7 @@
 					</p><p> Чтобы начать упражнение, 
 					выберите уровень сложности. Первый уровень  - самый легкий необходимо нажимать кнопку, соответсвующую изображению.
 					Второй уровень предполагает наличие конкурирующих каналов. Необходимо выбирать то, что изображено на рисунке.</p>
-				</div>
-				<div class="rules2" >
-					<img src="35.jpg" width="40">
-					<h2>Выберите уровень сложности</h2>
-					<form method = "POST" class="lev">
-						<select name = "level" id="levels">
-							<option value="first">Первый</option>
-							<option value="second">Второй</option>
-						</select>
-						<br><input class="butt next" id="next" type = "submit" value = "Далее" onclick="getAjax(); return false;"> 
-					</form>
+                    <br><input class="butt next" id="next" type = "submit" value = "Далее" onclick="getAjax(); return false;">
 				</div>
 	</div>
 	
@@ -50,6 +40,13 @@
         </div>
     </div>
 
+    <div class="block2" id="infoAboutLevel">
+    		<p class="finish">Инструкция</p>
+    		<div class="rules">
+    			<p class="percent instruction"></p>
+    		<input class="butt go" type = "submit" id="go" value = "Все понятно">
+    		</div>
+    </div>
 
 	<div class="img check"></div>
 	<div class="img close"></div>
@@ -75,9 +72,7 @@
 			<img src="like.png" width="80">
 			<p class="percent"></p>
 		</div>
-		<input class="butt restart" type = "submit" id="reset" value = "Заново">
-		<input class="butt nextLevel" type = "submit" id="nextLevel" value = "Следующий уровень">
-		<a href="/tests/" class="butt return-tests" id="backToTest">Назад к тестам</a>
+		<input class="butt go" type = "submit" id="nextLevel" value = "Следующий уровень">
 		
 	</div>
 </div>

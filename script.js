@@ -6,7 +6,7 @@ class Test{
   task;
 
   constructor(){
-    this.AMOUNT_TIME_FOR_TEST_IN_SECONDS = 2;
+    this.AMOUNT_TIME_FOR_TEST_IN_SECONDS = 5;
     this.KEYCODE_LEFT_BUTTON = 37;
     this.KEYCODE_RIGHT_BUTTON = 39;
     this.testCountdownElement = $('#test_countdown');
@@ -19,12 +19,35 @@ class Test{
     this.getDataTest();
     this.task = new Task();
     this.rightAnswers = 0;
-    this.nextTaskWithContext = this.nextTask.apply(this);
-    this.nextTaskTimeout = setInterval(this.nextTask.bind(this), this.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
+    this.wrongAnswers = 0;
+    this.amountTasks = 0;
+    this.level = 0;
+
+      this.rightAnswersLevel1 = 0;
+      this.wrongAnswersLevel1 = 0;
+      this.rightAnswersLevel2_1 = 0;
+      this.wrongAnswersLevel2_1 = 0;
+      this.rightAnswersLevel2_2 = 0;
+      this.wrongAnswersLevel2_2 = 0;
+      this.amountTasksLevel1 = 0;
+      this.amountTasksLevel2_1 = 0;
+      this.amountTasksLevel2_2 = 0;
   };
 
-  nextTask() {
+  setLevel(newLevel)
+  {
+      this.level = newLevel;
+      this.nextTask = this.level == 1 ? this.nextTaskLevel1 : this.nextTaskLevel2;
+  };
+
+  setIntervalForNextTask()
+  {
+      this.nextTaskTimeout = setInterval(this.nextTask.bind(this), this.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
+  }
+
+  nextTaskLevel1() {
     console.log("next task!!!");
+    this.amountTasks++;
     if (this.testIsEnded) {
       return;
     }
@@ -55,21 +78,49 @@ class Test{
     }
 
     this.task.addTaskImage(this.task.image);
-    //this.nextTaskTimeout = setTimeout(this.nextTask.bind(this), this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
-
-   /* this.nextTaskTimeout = setTimeout(function() {
-      this.nextTask();
-    }.bind(this), this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);*/
-    //this.nextTaskTimeout = setTimeout(this.nextTaskWithContext, this.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
   };
+
+  nextTaskLevel2(myAudio, btnFlag) {
+      this.amountTasks++;
+      if (this.testIsEnded) {
+          return;
+      }
+
+      if (this.task.audio) {
+          this.task.audio.pause();
+      }
+
+      this.task.clearTaskImage();
+      this.task.clearTask();
+      let indexImage = this.selfRandom(0, this.images.length - 1);
+      let indexAudio = this.selfRandom(0, this.audios.length - 1);
+
+      var taskImg = this.images[indexImage].fileName;
+      var taskType = this.level == 2 ? this.images[indexImage].type : this.audios[indexAudio].type;
+      var taskAudio = this.audios[indexAudio].fileName;
+
+      if (taskImg == null) {
+          return;
+      }
+
+      this.task.addTaskImage(taskImg);
+
+      this.task.playAudio(taskAudio);
+      this.task.type = taskType;
+  }
 
   checkAnswerProcess(answer) {
     if (this.checkAnswer(answer)) {
       this.rightAnswers++;
     }
+    else
+    {
+        this.wrongAnswers ++;
+    }
 
     clearTimeout(this.nextTaskTimeout);
-    this.nextTask();
+      this.nextTaskTimeout = setInterval(this.nextTask.bind(this), this.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
+      this.nextTask();
   }
 
   checkAnswer(btnName) {
@@ -94,9 +145,13 @@ class Test{
 
     this.images = new Array(
         {fileName: 'taskC1.jpg', type: "cat"},
+        {fileName: 'taskC2.jpg', type: "cat"},
+        {fileName: 'taskC3.jpg', type: "cat"},
         {fileName: 'taskC4.jpg', type: "cat"},
         {fileName: 'taskD5.jpg', type: "dog"},
-        {fileName: 'taskD8.jpg', type: "dog"}
+        {fileName: 'taskD6.jpg', type: "dog"},
+        {fileName: 'taskD7.jpg', type: "dog"},
+        {fileName: 'taskD8.jpg', type: "dog"},
     );
 
     this.audios = new Array(
@@ -116,6 +171,55 @@ class Test{
     this.testCountdownElement.html(`Осталось ${this.leastTimeForTest} секунд`);
   };
 
+  infoAboutLevel1()
+  {
+      $(".instruction").empty();
+      $('#infoAboutLevel').delay(1000).fadeIn(300);
+      $('#go').delay(1000).fadeIn(300);
+      $(".instruction").append("Это первый уровень тестирования. <br> " +
+          "Перед вами будут представлены картинки с кошками и собаками. Вам необходимо идентифицировать животное. "+
+          "Вы можете выбирать ответ с помощью клавиш клавиатуры <- и ->, а также кликом по соответсвующим кнопкам на экране.<br><br>"+
+          `На выполнение задания отводится ${this.AMOUNT_TIME_FOR_TEST_IN_SECONDS} секунд`);
+  }
+
+  infoAboutLevel2()
+  {
+        $(".instruction").empty();
+        $('#infoAboutLevel').delay(1000).fadeIn(300);
+        $('#go').delay(1000).fadeIn(300);
+        $(".instruction").append("Это второй уровень тестирования. <br> " +
+            "Вам все также необходимо идентифицировать животное. "+
+            "Но на этот раз перед вами будет и картинка и звук одновременно. Выбирать необходимо то животное, которое изображено на картинке. Правила выбора ответа остаются такими же<br><br>"+
+            `На выполнение задания отводится ${this.AMOUNT_TIME_FOR_TEST_IN_SECONDS} секунд`);
+  }
+
+  infoAboutLevel3()
+  {
+        $(".instruction").empty();
+        $('#infoAboutLevel').delay(1000).fadeIn(300);
+        $('#go').delay(1000).fadeIn(300);
+        $(".instruction").append("Это третий уровень тестирования. <br> " +
+            "Вам все также необходимо идентифицировать животное. "+
+            "Но на этот раз перед вами будет и картинка и звук одновременно. Выбирать необходимо то животное, которое вы слышите. Правила выбора ответа остаются такими же<br><br>"+
+            `На выполнение задания отводится ${this.AMOUNT_TIME_FOR_TEST_IN_SECONDS} секунд`);
+  }
+
+  maskResultBlock()
+  {
+        $('#b2').delay().fadeOut();
+        $('#reset').delay().fadeOut();
+        $('#backToTest').delay().fadeOut();
+        $('#nextLevel').delay().fadeOut();
+  }
+
+  showResultBlock()
+  {
+        $('#b2').delay().fadeIn(300);
+        $('#reset').delay().fadeIn(300);
+        $('#backToTest').delay().fadeIn(300);
+        $('#nextLevel').delay().fadeIn(300);
+  }
+
 }
 
 class Task{
@@ -123,7 +227,7 @@ class Task{
   audioImage = './audio.jpg';
   image;
   constructor(){
-    this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS = 3 * 1000;
+    this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS = 2 * 1000;
     this.audio = new Audio;
   };
 
@@ -181,11 +285,71 @@ class Timer{
       $('#backToTest').delay(1000).fadeIn(300);
       $('#nextLevel').delay(1000).fadeIn(300);
 
-      $(".percent").html(`Количество правильных ответов: ${rightAnswers}`);
+      $(".percent").empty();
 
-    //$('#result').html(`Количество правильных ответов: ${this.test.rightAnswers}`);
-    console.log('test time ended');
+      $(".percent").append(`Кол-во правильных ответов: ${this.test.rightAnswers}<br>`);
+      $(".percent").append(`Кол-во ошибочных ответов: ${this.test.wrongAnswers}<br>`);
+      $(".percent").append(`Кол-во заданий: ${this.test.amountTasks}`);
+
+      switch (this.test.level) {
+          case 1: {
+              this.test.rightAnswersLevel1 = this.test.rightAnswers;
+              this.test.wrongAnswersLevel1 = this.test.wrongAnswers;
+              this.test.amountTasksLevel1 = this.test.amountTasks;
+          }
+          case 2: {
+              this.test.rightAnswersLevel2_1 = this.test.rightAnswers;
+              this.test.wrongAnswersLevel2_1 = this.test.wrongAnswers;
+              this.test.amountTasksLevel2_1 = this.test.amountTasks;
+          }
+          case 3: {
+              this.test.rightAnswersLevel2_2 = this.test.rightAnswers;
+              this.test.wrongAnswersLevel2_2 = this.test.wrongAnswers;
+              this.test.amountTasksLevel2_2 = this.test.amountTasks;
+          }
+      }
+
+      this.test.rightAnswers = 0;
+      this.test.wrongAnswers = 0;
+      this.test.amountTasks = 0;
   };
+}
+
+class Result{
+    constructor(test)
+    {
+        this.rightAnswersLevel1 = 0;
+        this.wrongAnswersLevel1 = 0;
+        this.rightAnswersLevel2_1 = 0;
+        this.wrongAnswersLevel2_1 = 0;
+        this.rightAnswersLevel2_2 = 0;
+        this.wrongAnswersLevel2_2 = 0;
+        this.amountTasksLevel1 = 0;
+        this.amountTasksLevel2_1 = 0;
+        this.amountTasksLevel2_2 = 0;
+        this.test = test;
+    }
+
+    setResultForLevel(level, rightAnswers, wrongAnswers, amountTasks)
+    {
+        switch (level) {
+            case 1: {
+                this.rightAnswersLevel1 = rightAnswers;
+                this.wrongAnswersLevel1 = wrongAnswers;
+                this.amountTasksLevel1 = amountTasks;
+            }
+            case 2: {
+                this.rightAnswersLevel2_1 = rightAnswers;
+                this.wrongAnswersLevel2_1 = wrongAnswers;
+                this.amountTasksLevel2_1 = amountTasks;
+            }
+            case 3: {
+                this.rightAnswersLevel2_2 = rightAnswers;
+                this.wrongAnswersLevel2_2 = wrongAnswers;
+                this.amountTasksLevel2_2 = amountTasks;
+            }
+        }
+    }
 }
 
 $(document).ready(function () {
@@ -198,79 +362,100 @@ $(document).ready(function () {
 
   function startTest() {
     $(this).fadeOut(500);
-    $('#b1').delay(1000).fadeIn(300);
-    $('.next').delay(1000).fadeIn(300);
+    $('#b1').delay(1000).fadeIn(100);
+    $('.next').delay(1000).fadeIn(100);
   }
 
   $('#next').on('click', function () {
     hideAndShowElements();
 
-    test = new Test();
-    initEventListeners();
-    // TODO: refactor this function
+      var test = new Test();
 
-    index = 0;							//индекс задачи
-    var col = 20;
-    var level = $('#levels').val();		//уровень теста
+      let result = new Result(test);
+      test.infoAboutLevel1();
 
-    test.level = $('#levels').val();
-    test.nextTask();
-    test.timer = new Timer(test);
-
-    function initEventListeners() {
-      document.addEventListener("keydown", onKeyDown);
-      leftButton.on('click', checkLeftButtonAnswer);
-      rightButton.on('click', checkRightButtonAnswer);
-    }
-
-    function checkLeftButtonAnswer() {
-      test.checkAnswerProcess(this.name);
-    }
-
-    function checkRightButtonAnswer() {
-      test.checkAnswerProcess(this.name);
-    }
-
-    function nextTaskLevel2(myAudio, btnFlag) {
-      if (myAudio != null)
-        myAudio.pause();
-
-      index = selfRandom(0, images.length - 1);
-      indexAudio = selfRandom(0, images.length - 1);
-
-      clearTaskImage
-
-      var taskImg = images[index].fileName;
-      var taskAudio = audios[indexAudio].fileName;
-
-      if (taskImg == null) {
-        return;
+      function initEventListeners() {
+          document.addEventListener("keydown", onKeyDown);
+          leftButton.on('click', checkLeftButtonAnswer);
+          rightButton.on('click', checkRightButtonAnswer);
       }
 
-      addTaskImage(taskImg);
-
-      playAudio(taskAudio);
-
-    }
-
-    function onKeyDown(e) {
-      switch (e.keyCode) {
-        case KEYCODE_LEFT_BUTTON: {
-          leftButton.click();
-          break;
-        }
-
-        case KEYCODE_RIGHT_BUTTON: {
-          rightButton.click();
-          break;
-        }
-
-        default: {
-          break;
-        }
+      function checkLeftButtonAnswer() {
+          test.checkAnswerProcess(this.name);
       }
-    }
 
+      function checkRightButtonAnswer() {
+          test.checkAnswerProcess(this.name);
+      }
+
+      function onKeyDown(e) {
+          switch (e.keyCode) {
+              case KEYCODE_LEFT_BUTTON: {
+                  leftButton.click();
+                  break;
+              }
+
+              case KEYCODE_RIGHT_BUTTON: {
+                  rightButton.click();
+                  break;
+              }
+
+              default: {
+                  break;
+              }
+          }
+      }
+
+      $('#go').on('click',startLevel);
+
+      $('#nextLevel').on('click', initNewLevel);
+
+      function initNewLevel()
+      {
+          if(test.level == 3)
+          {
+              $(".instruction").empty()
+              $(".instruction").append("Тест закончен");
+              $('#nextLevel').disabled();
+              return;
+          }
+          test.maskResultBlock();
+          result.setResultForLevel(test.level, test.rightAnswers, test.wrongAnswers, test.amountTasks);
+
+          let newLevel = test.level + 1;
+          test = new Test();
+          test.setLevel(newLevel);
+
+          switch (test.level) {
+              case 1: test.infoAboutLevel1();
+              case 2: test.infoAboutLevel2();
+              case 3: test.infoAboutLevel3();
+          }
+      }
+
+      function startLevel()
+      {
+          if(test.level == 0)
+          {
+              let newLevel = test.level + 1;
+              test.setLevel(newLevel);
+          }
+
+          $('#infoAboutLevel').delay(1000).fadeOut();
+          $('#go').delay(1000).fadeOut();
+          $('.leftBtn').delay(1000).fadeIn();
+          $('.rightBtn').delay(1000).fadeIn();
+          $('#task').delay(1000).fadeIn();
+          $('#test_countdown').delay(1000).fadeIn(500);
+
+
+          initEventListeners();
+          // TODO: refactor this function
+
+          test.nextTask();
+          test.timer = new Timer(test);
+          test.setIntervalForNextTask();
+      };
   });
 
 
@@ -317,13 +502,11 @@ $(document).ready(function () {
   }
 
   function hideAndShowElements() {
-    $('#b1').fadeOut(500);
+    $('#b1').fadeOut();
 
-    $('.info').delay(4500).fadeOut(500);
+    $('.info').delay(4500).fadeOut();
 
-    $('.leftBtn').delay(1000).fadeIn(500);
-    $('.rightBtn').delay(1000).fadeIn(500);
-    $('#task').delay(1000).fadeIn(500);
+
   }
 
 

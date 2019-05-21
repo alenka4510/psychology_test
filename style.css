@@ -80,7 +80,7 @@
 	left: 40%;
 	display:none;
     margin: 0px auto;
-    width: 900px;
+    width: 450px;
     height: 500px;
     padding:10px;
     border: 1px solid;
@@ -144,6 +144,11 @@
 	width:420px;
 	height:200px;
 }
+#infoAboutLevel .rules
+{
+    width:420px;
+    height:200px;
+}
 .next-test
 {
 	top:50%;
@@ -164,6 +169,16 @@
 	   0 1px rgba(255,255,255,.2) inset,
 	   0 3px 5px rgba(0,1,6,.5),
 	   0 0 1px 1px rgba(0,1,6,.2);
+}
+.go
+{
+    display:none;
+    position:relative;
+    width:180px;
+    text-align:center;
+    font-size:25px;
+    margin:160px 0 0 120px;
+    border:0;
 }
 
 #levels
@@ -191,7 +206,7 @@
 	left:45%;
 	font-size:55px;
 } 
-#one,#two,#three
+#counet
 {
 	display:none;
 	padding:10px 25px;
@@ -205,75 +220,6 @@
 	   0 0 1px 1px rgba(0,1,6,.2);
 }
 
-.game
-{
-	display:none;
-}
-	
-
-.test-tab
-{
-	margin: 50px auto;
-	border-collapse: separate;
-	border-spacing: 5px;
-	background: #C5D5E4;
-	border: 16px solid #C5D5E4;
-	border-radius: 20px;
-}
-.tet-tab tr 
-{
-	font-size: 18px;
-	padding: 20px;
-}
-.test-tab td 
-{
-	border:1px solid grey;
-	background: #ffffff;
-}
-.tab1 td
-{
-	padding: 40px;
-}
-.tab2 td
-{
-	padding: 30px;
-}
-.tab3 td
-{
-	padding: 25px;
-}
-.blue
-{	
-	background: #45A5EE !important;
-}
-.green
-{	
-	background: #3EE182 !important;
-}
-.right
-{	
-	background: #FFE21F !important;
-}
-.img
-{
-	display:none;
-	position:absolute;
-	left:43%;
-	top:35%;
-	width:150px;
-	height:150px;
-	background-size: 100%; 
-}
-.check
-{
-	opacity:1 !important;
-	background:url("check.png") no-repeat ;
-}
-.close
-{
-	opacity:1 !important;
-	background:url("close.png") no-repeat ;
-}
 .result
 {
 	display:none;
@@ -299,6 +245,12 @@
 	display:block;
 	margin-top:30px !important;
 	font-size:18px;
+}
+#infoAboutLevel .percent
+{
+    display:block;
+    margin-top:30px !important;
+    font-size:18px;
 }
 .restart
 {
