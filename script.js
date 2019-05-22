@@ -414,9 +414,9 @@ $(document).ready(function () {
       {
           if(test.level == 3)
           {
-              $(".instruction").empty()
-              $(".instruction").append("Тест закончен");
-              $('#nextLevel').disabled();
+              $(".percent").empty()
+              $(".percent").append("Тест закончен");
+              $('#nextLevel').remove();
               return;
           }
           test.maskResultBlock();
@@ -427,9 +427,10 @@ $(document).ready(function () {
           test.setLevel(newLevel);
 
           switch (test.level) {
-              case 1: test.infoAboutLevel1();
-              case 2: test.infoAboutLevel2();
-              case 3: test.infoAboutLevel3();
+              case 1: test.infoAboutLevel1(); break;
+              case 2: test.infoAboutLevel2(); break;
+              case 3: test.infoAboutLevel3(); break;
+              default: break;
           }
       }
 
@@ -441,12 +442,12 @@ $(document).ready(function () {
               test.setLevel(newLevel);
           }
 
-          $('#infoAboutLevel').delay(1000).fadeOut();
-          $('#go').delay(1000).fadeOut();
-          $('.leftBtn').delay(1000).fadeIn();
-          $('.rightBtn').delay(1000).fadeIn();
-          $('#task').delay(1000).fadeIn();
-          $('#test_countdown').delay(1000).fadeIn(500);
+          $('#infoAboutLevel').delay().fadeOut();
+          $('#go').delay().fadeOut();
+          $('.leftBtn').delay().fadeIn();
+          $('.rightBtn').delay().fadeIn();
+          $('#task').delay().fadeIn();
+          $('#test_countdown').delay().fadeIn();
 
 
           initEventListeners();
@@ -508,42 +509,6 @@ $(document).ready(function () {
 
 
   }
-
-
-  /*setTimeout(function()
-   {
-   var data=$(".result").html();
-   level1=data.indexOf("first") + 1;
-   level2=data.indexOf("second") + 1;
-   level3=data.indexOf("third") + 1;
-   $('.wrap').fadeIn(500);
-   $('.attempt b').text(atm);
-
-   if(level1!=0)
-   {
-   end=7;
-   $('#circle').text(0+'/'+(end-3));
-   max=15;
-   print_table(4);
-   test();
-   }
-   if(level2!=0)
-   {
-   end=11;
-   $('#circle').text(0+'/'+(end-3));
-   max=24;
-   print_table(5);
-   test();
-   }
-   if(level3!=0)
-   {
-   end=14;
-   $('#circle').text(0+'/'+(end-3));
-   max=35;
-   print_table(6);
-   test();
-   }
-   },5500); */
 });
 
 function getAjax() {

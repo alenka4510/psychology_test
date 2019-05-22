@@ -174,10 +174,10 @@
 {
     display:none;
     position:relative;
-    width:180px;
+    width:280px;
     text-align:center;
     font-size:25px;
-    margin:160px 0 0 120px;
+    margin:160px 0 0 90px;
     border:0;
 }
 
@@ -268,7 +268,7 @@
 	font-size:22px;
 	display:inline-block;
 	position:relative;
-	width:250px;
+	width:280px;
 	left:10%;
 	top: 30;
 }
