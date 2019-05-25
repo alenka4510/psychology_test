@@ -5,7 +5,7 @@
 	padding:50px;
 	margin:40px auto;
 	position:absolute;
-}
+}  
 .content:after
 {
 	content: '';
