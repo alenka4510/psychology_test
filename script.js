@@ -5,7 +5,7 @@ class Test{
   level;
   task;
 
-  constructor(){
+  constructor(options){
     this.AMOUNT_TIME_FOR_TEST_IN_SECONDS = 5;
     this.KEYCODE_LEFT_BUTTON = 37;
     this.KEYCODE_RIGHT_BUTTON = 39;
@@ -43,6 +43,7 @@ class Test{
   setIntervalForNextTask()
   {
       this.nextTaskTimeout = setInterval(this.nextTask.bind(this), this.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
+      console.log({ createdTimer: this.nextTaskTimeout });
   }
 
   nextTaskLevel1() {
@@ -81,13 +82,14 @@ class Test{
   };
 
   nextTaskLevel2(myAudio, btnFlag) {
+    try {
       this.amountTasks++;
       if (this.testIsEnded) {
-          return;
+        return;
       }
 
       if (this.task.audio) {
-          this.task.audio.pause();
+        this.task.audio.src = '';
       }
 
       this.task.clearTaskImage();
@@ -95,31 +97,32 @@ class Test{
       let indexImage = this.selfRandom(0, this.images.length - 1);
       let indexAudio = this.selfRandom(0, this.audios.length - 1);
 
-      var taskImg = this.images[indexImage].fileName;
-      var taskType = this.level == 2 ? this.images[indexImage].type : this.audios[indexAudio].type;
-      var taskAudio = this.audios[indexAudio].fileName;
+      const taskImg = this.images[indexImage].fileName;
+      const taskType = this.level == 2 ? this.images[indexImage].type : this.audios[indexAudio].type;
+      const taskAudio = this.audios[indexAudio].fileName;
 
       if (taskImg == null) {
-          return;
+        return;
       }
 
       this.task.addTaskImage(taskImg);
-
       this.task.playAudio(taskAudio);
       this.task.type = taskType;
+    } catch (err) {
+      console.log({ err });
+    }
   }
 
   checkAnswerProcess(answer) {
     if (this.checkAnswer(answer)) {
       this.rightAnswers++;
-    }
-    else
-    {
-        this.wrongAnswers ++;
+    } else {
+      this.wrongAnswers ++;
     }
 
-    clearTimeout(this.nextTaskTimeout);
+    clearInterval(this.nextTaskTimeout);
       this.nextTaskTimeout = setInterval(this.nextTask.bind(this), this.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
+      console.log({ checkAnswerProcess_createdTimer: this.nextTaskTimeout });
       this.nextTask();
   }
 
@@ -129,14 +132,14 @@ class Test{
 
   getDataTest() {
     this.tasks = new Array(
-        {fileName: 'taskC1.jpg', type: "cat"},
-        {fileName: 'taskC2.jpg', type: "cat"},
-        {fileName: 'taskC3.jpg', type: "cat"},
-        {fileName: 'taskC4.jpg', type: "cat"},
-        {fileName: 'taskD5.jpg', type: "dog"},
-        {fileName: 'taskD6.jpg', type: "dog"},
-        {fileName: 'taskD7.jpg', type: "dog"},
-        {fileName: 'taskD8.jpg', type: "dog"},
+        // {fileName: 'taskC1.jpg', type: "cat"},
+        // {fileName: 'taskC2.jpg', type: "cat"},
+        // {fileName: 'taskC3.jpg', type: "cat"},
+        // {fileName: 'taskC4.jpg', type: "cat"},
+        // {fileName: 'taskD5.jpg', type: "dog"},
+        // {fileName: 'taskD6.jpg', type: "dog"},
+        // {fileName: 'taskD7.jpg', type: "dog"},
+        // {fileName: 'taskD8.jpg', type: "dog"},
         {fileName: '01001.mp3', type: "dog"},
         {fileName: '04453.mp3', type: "cat"},
         {fileName: '01004.mp3', type: "dog"},
@@ -222,13 +225,15 @@ class Test{
 
 }
 
+const AMOUNT_TIME_ON_ANSWER_IN_SECONDS = 5 * 1000;
+
 class Task{
-  type;
-  audioImage = './audio.jpg';
-  image;
   constructor(){
-    this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS = 2 * 1000;
+    this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS = AMOUNT_TIME_ON_ANSWER_IN_SECONDS;
     this.audio = new Audio;
+    this.type = undefined;
+    this.audioImage = './audio.jpg';
+    this.image = undefined;
   };
 
   clearTask(){
@@ -237,8 +242,14 @@ class Task{
   };
 
   playAudio(fileName) {
-    this.audio.src = fileName;
-    this.audio.play();
+    try {
+      console.log({ 1: 'playaudio' });
+      this.audio.src = `./${fileName}`;
+      this.audio.load();
+      this.audio.play();
+    } catch (err) {
+      console.log({ err });
+    }
   };
 
   clearTaskImage() {
@@ -272,7 +283,8 @@ class Timer{
   onTestCountdownEnded() {
     this.test.testIsEnded = true;
     if (this.test.nextTaskTimeout) {
-      clearTimeout(this.test.nextTaskTimeout);
+      clearInterval(this.test.nextTaskTimeout);
+      console.log({ this: this, timer: this.test.nextTaskTimeout });
     }
 
     this.test.task.audio.pause();
@@ -369,11 +381,9 @@ $(document).ready(function () {
   $('#next').on('click', function () {
     hideAndShowElements();
 
-      var test = new Test();
-
+      var test = new Test({ leftbutton: '#leftbutton' });
       let result = new Result(test);
       test.infoAboutLevel1();
-
       function initEventListeners() {
           document.addEventListener("keydown", onKeyDown);
           leftButton.on('click', checkLeftButtonAnswer);
@@ -406,9 +416,24 @@ $(document).ready(function () {
           }
       }
 
-      $('#go').on('click',startLevel);
+      $('#go').on('click', startLevel);
 
       $('#nextLevel').on('click', initNewLevel);
+
+      function firstTimer() {
+        let seconds = 3;
+        const firstTimerCountdown = setInterval(() => {
+          if (seconds < 0) {
+            clearInterval(firstTimerCountdown);
+            test.nextTask();
+            test.timer = new Timer(test);
+            test.setIntervalForNextTask();
+          }
+          console.log(seconds);
+          $('#start_counter').html(seconds);
+          seconds = seconds - 1;
+        }, 1000);
+      }
 
       function initNewLevel()
       {
@@ -434,28 +459,24 @@ $(document).ready(function () {
           }
       }
 
-      function startLevel()
-      {
-          if(test.level == 0)
-          {
-              let newLevel = test.level + 1;
-              test.setLevel(newLevel);
-          }
+      function startLevel() {
+        if(test.level == 0) {
+          let newLevel = test.level + 1;
+          test.setLevel(newLevel);
+        }
 
-          $('#infoAboutLevel').delay().fadeOut();
-          $('#go').delay().fadeOut();
-          $('.leftBtn').delay().fadeIn();
-          $('.rightBtn').delay().fadeIn();
-          $('#task').delay().fadeIn();
-          $('#test_countdown').delay().fadeIn();
+        $('#infoAboutLevel').delay().fadeOut();
+        $('#go').delay().fadeOut();
+        $('.leftBtn').delay().fadeIn();
+        $('.rightBtn').delay().fadeIn();
+        $('#task').delay().fadeIn();
+        $('#test_countdown').delay().fadeIn();
 
 
-          initEventListeners();
-          // TODO: refactor this function
+        initEventListeners();
+        // TODO: refactor this function
+        firstTimer();
 
-          test.nextTask();
-          test.timer = new Timer(test);
-          test.setIntervalForNextTask();
       };
   });
 

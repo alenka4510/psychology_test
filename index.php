@@ -47,7 +47,7 @@
     		<input class="butt go" type = "submit" id="go" value = "Все понятно">
     		</div>
     </div>
-
+    <div id='start_counter'> start counter </div>
 	<div class="img check"></div>
 	<div class="img close"></div>
 	<input class="next-test"  type = "button" value = "Далее">
