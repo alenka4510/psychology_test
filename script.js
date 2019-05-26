@@ -369,11 +369,14 @@ $(document).ready(function () {
   const KEYCODE_RIGHT_BUTTON = 39;
   const leftButton = $('.leftBtn');
   const rightButton = $('.rightBtn');
-  //начать тестирование
+    $('#start_counter').fadeOut();
+
+    //начать тестирование
   $('#play').on('click', startTest);
 
   function startTest() {
     $(this).fadeOut(500);
+    $('#start_counter').fadeOut();
     $('#b1').delay(1000).fadeIn(100);
     $('.next').delay(1000).fadeIn(100);
   }
@@ -459,6 +462,14 @@ $(document).ready(function () {
           }
       }
 
+      //оказать рабочую область - задания, кнопки выбора, таймер
+      function ShowWorkPlace() {
+          $('.leftBtn').delay(4000).fadeIn();
+          $('.rightBtn').delay(4000).fadeIn();
+          $('#task').delay(4000).fadeIn();
+          $('#test_countdown').delay(4000).fadeIn();
+      }
+
       function startLevel() {
         if(test.level == 0) {
           let newLevel = test.level + 1;
@@ -467,16 +478,14 @@ $(document).ready(function () {
 
         $('#infoAboutLevel').delay().fadeOut();
         $('#go').delay().fadeOut();
-        $('.leftBtn').delay().fadeIn();
-        $('.rightBtn').delay().fadeIn();
-        $('#task').delay().fadeIn();
-        $('#test_countdown').delay().fadeIn();
-
 
         initEventListeners();
-        // TODO: refactor this function
-        firstTimer();
 
+        // TODO: refactor this function
+        $('#start_counter').fadeIn();
+        firstTimer();
+        $('#start_counter').delay(4000).fadeOut();
+        ShowWorkPlace();
       };
   });
 
@@ -525,6 +534,7 @@ $(document).ready(function () {
 
   function hideAndShowElements() {
     $('#b1').fadeOut();
+    $('#start_counter').fadeOut();
 
     $('.info').delay(4500).fadeOut();
 
