@@ -23,6 +23,8 @@ class Test {
     this.amountTasks = 0;
     this.level = 0;
 
+    this.result = new Result(),
+
     this.rightAnswersLevel1 = 0;
     this.wrongAnswersLevel1 = 0;
     this.rightAnswersLevel2_1 = 0;
@@ -283,27 +285,27 @@ class Timer {
     $(".percent").append(`Кол-во ошибочных ответов: ${this.test.wrongAnswers}<br>`);
     //$(".percent").append(`Кол-во заданий: ${this.test.amountTasks - 1}`);
 
-    switch (this.test.level) {
-      case 1: {
-        this.test.rightAnswersLevel1 = this.test.rightAnswers;
-        this.test.wrongAnswersLevel1 = this.test.wrongAnswers;
-        this.test.amountTasksLevel1 = this.test.amountTasks;
-      }
-      case 2: {
-        this.test.rightAnswersLevel2_1 = this.test.rightAnswers;
-        this.test.wrongAnswersLevel2_1 = this.test.wrongAnswers;
-        this.test.amountTasksLevel2_1 = this.test.amountTasks;
-      }
-      case 3: {
-        this.test.rightAnswersLevel2_2 = this.test.rightAnswers;
-        this.test.wrongAnswersLevel2_2 = this.test.wrongAnswers;
-        this.test.amountTasksLevel2_2 = this.test.amountTasks;
-      }
-    }
-
-    this.test.rightAnswers = 0;
-    this.test.wrongAnswers = 0;
-    this.test.amountTasks = 0;
+    // switch (this.test.level) {
+    //   case 1: {
+    //     this.test.result.rightAnswersLevel1 = this.test.rightAnswers;
+    //     this.test.result.wrongAnswersLevel1 = this.test.wrongAnswers;
+    //     break;
+    //   }
+    //   case 2: {
+    //     this.test.result.rightAnswersLevel2_1 = this.test.rightAnswers;
+    //     this.test.result.wrongAnswersLevel2_1 = this.test.wrongAnswers;
+    //     break;
+    //   }
+    //   case 3: {
+    //     this.test.result.rightAnswersLevel2_2 = this.test.rightAnswers;
+    //     this.test.result.wrongAnswersLevel2_2 = this.test.wrongAnswers;
+    //     break;
+    //   }
+    // }
+    //
+    // this.test.rightAnswers = 0;
+    // this.test.wrongAnswers = 0;
+    // this.test.amountTasks = 0;
   };
 }
 
@@ -327,16 +329,19 @@ class Result {
         this.rightAnswersLevel1 = rightAnswers;
         this.wrongAnswersLevel1 = wrongAnswers;
         this.amountTasksLevel1 = amountTasks;
+        break;
       }
       case 2: {
         this.rightAnswersLevel2_1 = rightAnswers;
         this.wrongAnswersLevel2_1 = wrongAnswers;
         this.amountTasksLevel2_1 = amountTasks;
+        break;
       }
       case 3: {
         this.rightAnswersLevel2_2 = rightAnswers;
         this.wrongAnswersLevel2_2 = wrongAnswers;
         this.amountTasksLevel2_2 = amountTasks;
+        break;
       }
     }
   }
@@ -363,7 +368,7 @@ $(document).ready(function () {
     hideAndShowElements();
 
     var test = new Test({leftbutton: '#leftbutton'});
-    let result = new Result(test);
+    var result = new Result(test);
     test.infoAboutLevel1();
 
     function initEventListeners() {
@@ -421,6 +426,7 @@ $(document).ready(function () {
 
     function initNewLevel() {
       if (test.level == 3) {
+        result.setResultForLevel(test.level, test.rightAnswers, test.wrongAnswers, test.amountTasks);
         $(".percent").empty()
         $(".percent").append("Тест закончен");
         $('#nextLevel').remove();
@@ -429,8 +435,8 @@ $(document).ready(function () {
         return;
       }
       test.maskResultBlock();
-      result.setResultForLevel(test.level, test.rightAnswers, test.wrongAnswers, test.amountTasks);
 
+      result.setResultForLevel(test.level, test.rightAnswers, test.wrongAnswers, test.amountTasks);
       let newLevel = test.level + 1;
       test = new Test();
       test.setLevel(newLevel);
