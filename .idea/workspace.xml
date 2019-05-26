@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/script.js" line="284" mnemonic="2" />
-    <bookmark url="file://$PROJECT_DIR$/script.js" line="44" mnemonic="1" />
-    <bookmark url="file://$PROJECT_DIR$/script.js" line="91" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/script.js" line="264" mnemonic="2" />
+    <bookmark url="file://$PROJECT_DIR$/script.js" line="42" mnemonic="1" />
+    <bookmark url="file://$PROJECT_DIR$/script.js" line="88" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8ecab28-910e-4695-9678-857e027ed44b" name="Default" comment="">
@@ -28,38 +28,69 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="449">
-              <caret line="49" column="26" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/script.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="486" column="40" selection-start-line="486" selection-start-column="40" selection-end-line="486" selection-end-column="40" />
-              <folding>
-                <element signature="n#!!block;n#selfRandom#0;n#Test#0" />
-                <element signature="n#!!block;n#renderTestCountdown#0;n#Test#0" />
-                <element signature="n#!!block;n#infoAboutLevel2#0;n#Test#0" />
-                <element signature="n#!!block;n#infoAboutLevel3#0;n#Test#0" />
-                <element signature="n#!!block;n#maskResultBlock#0;n#Test#0" />
-                <element signature="n#!!block;n#showResultBlock#0;n#Test#0" />
-                <element signature="e#13176#13868#0" />
-                <element signature="e#14410#14477#0" />
-                <element signature="e#14540#15504#0" />
-                <element signature="n#!!block;n#getAjax#0" />
-              </folding>
+            <state relative-caret-position="328">
+              <caret line="64" column="54" selection-start-line="64" selection-start-column="42" selection-end-line="64" selection-end-column="54" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/script.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-367">
+              <caret line="321" column="3" lean-forward="true" selection-start-line="321" selection-start-column="3" selection-end-line="321" selection-end-column="3" />
+              <folding>
+                <element signature="n#!!block;n#setLevel#0;n#Test#0" />
+                <element signature="n#!!block;n#setIntervalForNextTask#0;n#Test#0" />
+                <element signature="n#!!block;n#nextTaskLevel1#0;n#Test#0" />
+                <element signature="n#!!block;n#nextTaskLevel2#0;n#Test#0" />
+                <element signature="n#!!block;n#checkAnswerProcess#0;n#Test#0" />
+                <element signature="e#2967#3001#0" />
+                <element signature="e#3007#3041#0" />
+                <element signature="n#!!block;n#checkAnswer#0;n#Test#0" />
+                <element signature="n#!!block;n#paseDataTest#0;n#Test#0" />
+                <element signature="n#!!block;n#getDataTest#0;n#Test#0" />
+                <element signature="n#!!block;n#selfRandom#0;n#Test#0" />
+                <element signature="n#!!block;n#renderTestCountdown#0;n#Test#0" />
+                <element signature="n#!!block;n#infoAboutLevel1#0;n#Test#0" />
+                <element signature="n#!!block;n#infoAboutLevel2#0;n#Test#0" />
+                <element signature="n#!!block;n#infoAboutLevel3#0;n#Test#0" />
+                <element signature="n#!!block;n#maskResultBlock#0;n#Test#0" />
+                <element signature="n#!!block;n#showResultBlock#0;n#Test#0" />
+                <element signature="n#Task#0" />
+                <element signature="n#!!block;n#clearTask#0;n#Task#0" />
+                <element signature="n#!!block;n#playAudio#0;n#Task#0" />
+                <element signature="n#!!block;n#clearTaskImage#0;n#Task#0" />
+                <element signature="n#!!block;n#addTaskImage#0;n#Task#0" />
+                <element signature="n#Timer#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/result.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="697">
+              <caret line="41" column="27" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
+            <state relative-caret-position="4386">
+              <caret line="258" column="1" selection-start-line="258" selection-start-column="1" selection-end-line="258" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dataTest.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="28" column="58" selection-start-line="28" selection-start-column="58" selection-end-line="28" selection-end-column="58" />
             </state>
           </provider>
         </entry>
@@ -73,11 +104,6 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/taskC1.jpg">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -89,36 +115,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>col</find>
-      <find>pause</find>
-      <find>testbeginTime</find>
-      <find>.js</find>
-      <find>images</find>
-      <find>taskIndex</find>
-      <find>index</find>
-      <find>$('#task').empty()</find>
-      <find>task</find>
-      <find>nextTestTimeout</find>
-      <find>rightAnswers</find>
-      <find>initTestCountdown</find>
-      <find>clickKey</find>
-      <find>37</find>
-      <find>processinChoice</find>
-      <find>.leftBtn</find>
+      <find>getDataTestFromAjax</find>
+      <find>.jpg</find>
+      <find>setInter</find>
+      <find>png</find>
+      <find>nextLevel</find>
+      <find>clearIn</find>
+      <find>rules</find>
+      <find>.block2</find>
+      <find>#info</find>
+      <find>getA</find>
+      <find>infoAboutLevel</find>
+      <find>check</find>
+      <find>testIsEnd</find>
+      <find>start_counter</find>
+      <find>ate</find>
+      <find>nextTaskL</find>
+      <find>start_</find>
+      <find>timer</find>
+      <find>.next</find>
+      <find>go</find>
+      <find>[2]</find>
+      <find>play</find>
+      <find>rest</find>
+      <find>time</find>
+      <find>return-tests</find>
+      <find>setresultF</find>
+      <find>rightAnswersLevel1</find>
       <find>AMOUNT_TIME_FOR_TEST_IN_SECONDS</find>
-      <find>dataTest</find>
-      <find>currentFile</find>
-      <find>setIntervalForNextTask</find>
-      <find>startLevel</find>
-      <find>nextTaskTimeout</find>
-      <find>this.nextTaskTimeout = setInterval</find>
-      <find>playAudio</find>
-      <find>this.nex</find>
-      <find>leastTimeForTest</find>
-      <find>this.test</find>
-      <find>addEventListener</find>
-      <find>ShowWorkPlace</find>
-      <find>#task</find>
+      <find>SendResult</find>
+      <find>setResultForLevel</find>
     </findStrings>
     <replaceStrings>
       <replace>testStartTime</replace>
@@ -139,19 +165,22 @@
         <option value="$PROJECT_DIR$/src/js.js" />
         <option value="$PROJECT_DIR$/lib/moment.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/dataTest.php" />
         <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/style.css" />
+        <option value="$PROJECT_DIR$/result.php" />
         <option value="$PROJECT_DIR$/script.js" />
       </list>
     </option>
   </component>
   <component name="JsFlowSettings">
-    <service-enabled>false</service-enabled>
+    <service-enabled>true</service-enabled>
     <exe-path />
-    <annotation-enable>false</annotation-enable>
-    <other-services-enabled>false</other-services-enabled>
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="676" />
+    <option name="x" value="-7" />
     <option name="width" value="697" />
     <option name="height" value="735" />
   </component>
@@ -170,7 +199,40 @@
             <path>
               <item name="psychology_test.git" type="b2602c69:ProjectViewProjectNode" />
               <item name="psychology_test.git" type="462c0819:PsiDirectoryNode" />
-              <item name="source" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="psychology_test.git" type="b2602c69:ProjectViewProjectNode" />
+              <item name="psychology_test.git" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="audio" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="psychology_test.git" type="b2602c69:ProjectViewProjectNode" />
+              <item name="psychology_test.git" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="audio" type="462c0819:PsiDirectoryNode" />
+              <item name="Cat" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="psychology_test.git" type="b2602c69:ProjectViewProjectNode" />
+              <item name="psychology_test.git" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="audio" type="462c0819:PsiDirectoryNode" />
+              <item name="Dog" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="psychology_test.git" type="b2602c69:ProjectViewProjectNode" />
+              <item name="psychology_test.git" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="image" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="psychology_test.git" type="b2602c69:ProjectViewProjectNode" />
+              <item name="psychology_test.git" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="image" type="462c0819:PsiDirectoryNode" />
+              <item name="Dog" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -187,12 +249,18 @@
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="js.eslint.eslintPackage" value="C:\Users\iseekyouu\AppData\Roaming\npm\node_modules\eslint" />
     <property name="js.eslint.nodeInterpreter" value="project" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/assets/audio/Dog" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path" value="node" />
-    <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JavaScript" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\psychology_test.git\assets\audio\Dog" />
+      <recent name="C:\xampp\htdocs\psychology_test.git\assets\audio\Cat" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -231,20 +299,21 @@
       <workItem from="1558257738167" duration="767000" />
       <workItem from="1558276146774" duration="1078000" />
       <workItem from="1558786239133" duration="4609000" />
-      <workItem from="1558852350953" duration="1420000" />
+      <workItem from="1558852350953" duration="19618000" />
+      <workItem from="1558886296802" duration="4070000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17191000" />
+    <option name="totallyTimeSpent" value="39459000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27306548" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21502976" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -255,6 +324,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -271,7 +341,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/script.js</url>
-          <line>276</line>
+          <line>255</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
@@ -279,9 +349,7 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/js.js" />
-    <entry file="file://$PROJECT_DIR$/timer.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/timer.html" />
     <entry file="file://$PROJECT_DIR$/instruction.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -300,6 +368,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/taskC1.jpg" />
+    <entry file="file://$PROJECT_DIR$/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4386">
+          <caret line="258" column="1" selection-start-line="258" selection-start-column="1" selection-end-line="258" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="58" selection-start-line="28" selection-start-column="58" selection-end-line="28" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -307,39 +390,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/taskC1.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="49" column="26" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="26" />
+        <state relative-caret-position="328">
+          <caret line="64" column="54" selection-start-line="64" selection-start-column="42" selection-end-line="64" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/result.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="41" column="27" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/script.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="486" column="40" selection-start-line="486" selection-start-column="40" selection-end-line="486" selection-end-column="40" />
+        <state relative-caret-position="-367">
+          <caret line="321" column="3" lean-forward="true" selection-start-line="321" selection-start-column="3" selection-end-line="321" selection-end-column="3" />
           <folding>
+            <element signature="n#!!block;n#setLevel#0;n#Test#0" />
+            <element signature="n#!!block;n#setIntervalForNextTask#0;n#Test#0" />
+            <element signature="n#!!block;n#nextTaskLevel1#0;n#Test#0" />
+            <element signature="n#!!block;n#nextTaskLevel2#0;n#Test#0" />
+            <element signature="n#!!block;n#checkAnswerProcess#0;n#Test#0" />
+            <element signature="e#2967#3001#0" />
+            <element signature="e#3007#3041#0" />
+            <element signature="n#!!block;n#checkAnswer#0;n#Test#0" />
+            <element signature="n#!!block;n#paseDataTest#0;n#Test#0" />
+            <element signature="n#!!block;n#getDataTest#0;n#Test#0" />
             <element signature="n#!!block;n#selfRandom#0;n#Test#0" />
             <element signature="n#!!block;n#renderTestCountdown#0;n#Test#0" />
+            <element signature="n#!!block;n#infoAboutLevel1#0;n#Test#0" />
             <element signature="n#!!block;n#infoAboutLevel2#0;n#Test#0" />
             <element signature="n#!!block;n#infoAboutLevel3#0;n#Test#0" />
             <element signature="n#!!block;n#maskResultBlock#0;n#Test#0" />
             <element signature="n#!!block;n#showResultBlock#0;n#Test#0" />
-            <element signature="e#13176#13868#0" />
-            <element signature="e#14410#14477#0" />
-            <element signature="e#14540#15504#0" />
-            <element signature="n#!!block;n#getAjax#0" />
+            <element signature="n#Task#0" />
+            <element signature="n#!!block;n#clearTask#0;n#Task#0" />
+            <element signature="n#!!block;n#playAudio#0;n#Task#0" />
+            <element signature="n#!!block;n#clearTaskImage#0;n#Task#0" />
+            <element signature="n#!!block;n#addTaskImage#0;n#Task#0" />
+            <element signature="n#Timer#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
         </state>
       </provider>
     </entry>

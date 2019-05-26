@@ -1,10 +1,10 @@
 .content
 {
-	width: 90%;
-	height: 90%;
-	padding:50px;
-	margin:40px auto;
-	position:absolute;
+	width: 1000px;
+	height: 700px;
+	padding: 50px;
+	margin: 40px auto;
+	position: relative;
 }  
 .content:after
 {
@@ -31,10 +31,10 @@
 .play 
 {	
 	position: relative;
-	left: 50%;
+	left: 10%;
 	font-size: 40px;
 	font-weight: 700;
-	margin-top: 15%;
+	margin-top: 40%;
 	cursor:pointer;
 	display: inline-block;
 	color: #ffffff !important;
@@ -56,7 +56,7 @@
 	width:170px;
 	text-align:center;
 	font-size:25px;
-	margin:160px 0 0 120px;
+	margin:120px 0 0 120px;
 	border:0;
 }
 .butt:hover:not(:active) 
@@ -75,7 +75,6 @@
 
 .block2 
 {
-	position: absolute;
 	top: 20%;
 	left: 40%;
 	display:none;
@@ -106,7 +105,7 @@
 	padding:15px;
 	width:410px;
 	float:left;
-	height:420px;
+	height:350px;
 }
 .block2 .rules2
 {
@@ -144,11 +143,6 @@
 	width:420px;
 	height:200px;
 }
-#infoAboutLevel .rules
-{
-    width:420px;
-    height:200px;
-}
 .next-test
 {
 	top:50%;
@@ -177,26 +171,8 @@
     width:280px;
     text-align:center;
     font-size:25px;
-    margin:160px 0 0 90px;
+    margin:75px 0 0 70px;
     border:0;
-}
-
-#levels
-{
-	width:280px;
-	margin:20px 0 0 45px;
-	font-size:16px;
-	height:40px;
-	padding:5px;
-	border-radius:5px;
-	
-}
-
-#levels option:hover
-{
-	background:#2C85F2;
-	color:white;
-
 }
 .info
 {
@@ -280,34 +256,6 @@
 	left:20;
 	position: relative;
 	top: 130;
-}
-.return-tests:hover
-{
-	text-decoration:none;
-}
-
-.wrap 
-{
-	display:none;
-}
-.attempt
-{
-    font-size: 19px;
-    background: rgba(0,0,50,0.3);
-    color: #fff;
-    display: block;
-    position: relative;
-    left: 2%;
-    float: right;
-    height: 40px;
-    vertical-align: middle;
-    padding: 7px;
-}
-.attempt b
-{
-	 background: rgba(0,0,50,0.2);
-	 padding: 5px;
-	 margin-left: 5px;
 }
 .bar 
 {
@@ -502,4 +450,22 @@
 	text-decoration: none;
 	outline: none;
 	border-radius: 3px;
+}
+#start_counter
+{
+	position:relative;
+	top: 40%;
+	left: 40%;
+	display:none;
+	padding:10px;
+	margin:0 5px;
+	border-radius:50px;
+	width: 20px;
+	color:#fff;
+	text-align: center;
+	background: linear-gradient(#2C85F2, #4B95F0) rgb(110,112,120);
+	box-shadow:
+			0 1px rgba(255,255,255,.2) inset,
+			0 3px 5px rgba(0,1,6,.5),
+			0 0 1px 1px rgba(0,1,6,.2);
 }
