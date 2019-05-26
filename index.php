@@ -80,4 +80,5 @@
 <script src="jquery-3.3.1.min.js"></script>
 <script src="./lib/moment.js"></script>
 <script src="script.js?rndstr=<%= getRandomStr() %>"></script>
+<?php include  'dataTest.php'; ?>
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
