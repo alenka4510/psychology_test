@@ -4,14 +4,14 @@
     global $USER;
     $id = $arFields["ID"];
     $nameu=$USER->GetLogin();
-    $amountRightAnswersLevel1: $_POST["amountRightAnswersLevel1"];
-    $amountRightAnswersLevel2: $_POST["amountRightAnswersLevel2_1"];
-    $amountRightAnswersLevel3: $_POST["amountRightAnswersLevel2_2"];
-    $amountWrongAnswersLevel1: $_POST["amountWrongAnswersLevel1"];
-    $amountWrongAnswersLevel2: $_POST["amountWrongAnswersLevel2"];
-    $amountWrongAnswersLevel3: $_POST["amountWrongAnswersLevel3"];
-    $timeForTest: $_POST["timeForTest"];
-    $timeForTask: $_POST["timeForTask"];
+    $amountRightAnswersLevel1= $_POST["amountRightAnswersLevel1"];
+    $amountRightAnswersLevel2= $_POST["amountRightAnswersLevel2_1"];
+    $amountRightAnswersLevel3= $_POST["amountRightAnswersLevel2_2"];
+    $amountWrongAnswersLevel1= $_POST["amountWrongAnswersLevel1"];
+    $amountWrongAnswersLevel2= $_POST["amountWrongAnswersLevel2"];
+    $amountWrongAnswersLevel3= $_POST["amountWrongAnswersLevel3"];
+    $timeForTest= $_POST["timeForTest"];
+    $timeForTask= $_POST["timeForTask"];
 
     $el = new CIBlockElement;
     $today = date($DB->DateFormatToPHP(CSite::GetDateFormat("FULL")), time());
@@ -28,12 +28,13 @@
         "AmountRightAnswersLevel3" =>$amountRightAnswersLevel3,
         "AmountWrongAnswersLevel3" =>$amountWrongAnswersLevel3
     );
+
     $arLoadProductArray = Array(
     "MODIFIED_BY" => $nameu,
     "IBLOCK_SECTION_ID" => false,
     "IBLOCK_ID" => $IBLOCK_ID,
     "PROPERTY_VALUES"=> $PROP,
-    "NAME" => "Тест #",
+    "NAME" => "Тест с животными",
     "ACTIVE" => "Y", // активен
     "PREVIEW_TEXT" => "текст для списка элементов",
     "DETAIL_TEXT" => "текст для детального просмотра"
