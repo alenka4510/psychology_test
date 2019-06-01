@@ -1,12 +1,9 @@
+﻿var AMOUNT_TIME_ON_ANSWER_IN_SECONDS = 2;
+var CAMOUNT_TIME_FOR_TEST_IN_SECONDS = 10;
+
 class Test {
-
-  testStartTime;
-  nextTaskTimeout;
-  level;
-  task;
-
   constructor(options) {
-    this.AMOUNT_TIME_FOR_TEST_IN_SECONDS = 5;
+    this.AMOUNT_TIME_FOR_TEST_IN_SECONDS = CAMOUNT_TIME_FOR_TEST_IN_SECONDS;
     this.KEYCODE_LEFT_BUTTON = 37;
     this.KEYCODE_RIGHT_BUTTON = 39;
     this.testCountdownElement = $('#test_countdown');
@@ -22,9 +19,8 @@ class Test {
     this.wrongAnswers = 0;
     this.amountTasks = 0;
     this.level = 0;
-
+    this.nextTaskTimeout = undefined;
     this.result = new Result(),
-
     this.rightAnswersLevel1 = 0;
     this.wrongAnswersLevel1 = 0;
     this.rightAnswersLevel2_1 = 0;
@@ -34,6 +30,10 @@ class Test {
     this.amountTasksLevel1 = 0;
     this.amountTasksLevel2_1 = 0;
     this.amountTasksLevel2_2 = 0;
+	this.answersTimes;
+	this.reaction;
+
+	this.firstTime = true;
   };
 
   setLevel(newLevel) {
@@ -47,14 +47,25 @@ class Test {
   }
 
   nextTaskLevel1() {
-    console.log("next task!!!");
+
+	if(this.firstTime)
+	{
+		this.firstTime = false;
+		this.reaction = performance.now();
+	}
+	else
+	{
+		this.reaction = performance.now() - this.reaction;
+		console.log({reaction : this.reaction});
+	}
+
     this.amountTasks++;
     if (this.testIsEnded) {
       return;
     }
 
     if (this.task.audio) {
-      this.task.audio.pause();
+		this.task.audio.pause();
     }
 
     this.task.clearTaskImage();
@@ -88,7 +99,7 @@ class Test {
       }
 
       if (this.task.audio) {
-        this.task.audio.src = '';
+		this.task.audio.pause();
       }
 
       this.task.clearTaskImage();
@@ -164,9 +175,9 @@ class Test {
     $(".instruction").empty();
     $('#infoAboutLevel').delay(1000).fadeIn(300);
     $('#go').delay(1000).fadeIn(300);
-    $(".instruction").append("Это первый уровень тестирования. <br> " +
-      "Перед вами будут представлены картинки с кошками и собаками. Вам необходимо идентифицировать животное. " +
-      "Вы можете выбирать ответ с помощью клавиш клавиатуры <- и ->, а также кликом по соответсвующим кнопкам на экране.<br><br>" +
+    $(".instruction").append("Уровень 1. <br> " +
+      "Перед вами будут представлены КАРТИНКИ с кошками и собаками. Вам необходимо идентифицировать животное. " +
+      "Вы можете выбирать ответ с помощью клавиш клавиатуры  ← и →, а также кликом по соответсвующим кнопкам на экране.<br><br>" +
       `На выполнение задания отводится ${this.AMOUNT_TIME_FOR_TEST_IN_SECONDS} секунд`);
   }
 
@@ -174,9 +185,8 @@ class Test {
     $(".instruction").empty();
     $('#infoAboutLevel').delay(1000).fadeIn(300);
     $('#go').delay(1000).fadeIn(300);
-    $(".instruction").append("Это второй уровень тестирования. <br> " +
-      "Вам все также необходимо идентифицировать животное. " +
-      "Но на этот раз перед вами будет и картинка и звук одновременно. Выбирать необходимо то животное, которое изображено на картинке. Правила выбора ответа остаются такими же<br><br>" +
+    $(".instruction").append("Уровень 2. <br> " +
+      "Перед вами будет и КАРТИНКА и ЗВУК одновременно. Выбирать необходимо то животное, которое ИЗОБРАЖЕНО НА КАРТИНКЕ.<br><br>" +
       `На выполнение задания отводится ${this.AMOUNT_TIME_FOR_TEST_IN_SECONDS} секунд`);
   }
 
@@ -184,9 +194,8 @@ class Test {
     $(".instruction").empty();
     $('#infoAboutLevel').delay(1000).fadeIn(300);
     $('#go').delay(1000).fadeIn(300);
-    $(".instruction").append("Это третий уровень тестирования. <br> " +
-      "Вам все также необходимо идентифицировать животное. " +
-      "Но на этот раз перед вами будет и картинка и звук одновременно. Выбирать необходимо то животное, которое вы слышите. Правила выбора ответа остаются такими же<br><br>" +
+    $(".instruction").append("Уровень 3. <br> " +
+      "Перед вами будет и КАРТИНКА и ЗВУК одновременно. Выбирать необходимо то животное, которое вы СЛЫШИТЕ.<br><br>" +
       `На выполнение задания отводится ${this.AMOUNT_TIME_FOR_TEST_IN_SECONDS} секунд`);
   }
 
@@ -206,11 +215,10 @@ class Test {
 
 }
 
-const AMOUNT_TIME_ON_ANSWER_IN_SECONDS = 2 * 1000;
 
 class Task {
   constructor() {
-    this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS = AMOUNT_TIME_ON_ANSWER_IN_SECONDS;
+    this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS = AMOUNT_TIME_ON_ANSWER_IN_SECONDS * 1000;
     this.audio = new Audio;
     this.type = undefined;
     this.audioImage = './assets/image/audio.jpg';
@@ -225,8 +233,9 @@ class Task {
   playAudio(fileName) {
     try {
       console.log({1: 'playaudio'});
-      this.audio.src = `./${fileName}`;
-      this.audio.load();
+	  this.audio.setAttribute('src',fileName);
+	  //this.audio.src = fileName;
+this.audio.load();
       this.audio.play();
     } catch (err) {
       console.log({err});
@@ -284,28 +293,6 @@ class Timer {
     $(".percent").append(`Кол-во правильных ответов: ${this.test.rightAnswers}<br>`);
     $(".percent").append(`Кол-во ошибочных ответов: ${this.test.wrongAnswers}<br>`);
     //$(".percent").append(`Кол-во заданий: ${this.test.amountTasks - 1}`);
-
-    // switch (this.test.level) {
-    //   case 1: {
-    //     this.test.result.rightAnswersLevel1 = this.test.rightAnswers;
-    //     this.test.result.wrongAnswersLevel1 = this.test.wrongAnswers;
-    //     break;
-    //   }
-    //   case 2: {
-    //     this.test.result.rightAnswersLevel2_1 = this.test.rightAnswers;
-    //     this.test.result.wrongAnswersLevel2_1 = this.test.wrongAnswers;
-    //     break;
-    //   }
-    //   case 3: {
-    //     this.test.result.rightAnswersLevel2_2 = this.test.rightAnswers;
-    //     this.test.result.wrongAnswersLevel2_2 = this.test.wrongAnswers;
-    //     break;
-    //   }
-    // }
-    //
-    // this.test.rightAnswers = 0;
-    // this.test.wrongAnswers = 0;
-    // this.test.amountTasks = 0;
   };
 }
 
@@ -353,6 +340,8 @@ $(document).ready(function () {
   const leftButton = $('.leftBtn');
   const rightButton = $('.rightBtn');
   $('#start_counter').fadeOut();
+  $('.return-tests').fadeOut();
+  //getTestSettings();
 
   //начать тестирование
   $('#play').on('click', startTest);
@@ -368,6 +357,7 @@ $(document).ready(function () {
     hideAndShowElements();
 
     var test = new Test({leftbutton: '#leftbutton'});
+
     var result = new Result(test);
     test.infoAboutLevel1();
 
@@ -417,6 +407,8 @@ $(document).ready(function () {
           test.nextTask();
           test.timer = new Timer(test);
           test.setIntervalForNextTask();
+			test.reaction = performance.now();
+			console.log(test.reaction);
         }
         console.log(seconds);
         $('#start_counter').html(seconds);
@@ -430,8 +422,10 @@ $(document).ready(function () {
         $(".percent").empty()
         $(".percent").append("Тест закончен");
         $('#nextLevel').remove();
-        $(".return-tests").css("display", "");
+        $(".return-tests").fadeIn();
         SendResult(result);
+		const res = CalcPercentRightAnswers(result);
+		addResultsToCommonTable(res);
         return;
       }
       test.maskResultBlock();
@@ -456,19 +450,38 @@ $(document).ready(function () {
       }
     }
 
+	function CalcPercentRightAnswers(result)
+	{
+		amountRightAnswersLevel1 = result.rightAnswersLevel1;
+          amountRightAnswersLevel2 = result.rightAnswersLevel2_1;
+          amountRightAnswersLevel3 = result.rightAnswersLevel2_2;
+          amountWrongAnswersLevel1 = result.wrongAnswersLevel1;
+          amountWrongAnswersLevel2 = result.wrongAnswersLevel2_1;
+          amountWrongAnswersLevel3 = result.wrongAnswersLevel2_2;
+
+		const amountTasks = result.amountTasksLevel1 + result.amountTasksLevel2_1 + result.amountTasksLevel2_2;
+		const allRight =amountRightAnswersLevel1 + amountRightAnswersLevel2 + amountRightAnswersLevel3;
+		const allWrong =amountWrongAnswersLevel1+amountWrongAnswersLevel2+amountWrongAnswersLevel3;
+
+		return String(Math.ceil(allRight * 100 / amountTasks).toPrecision(2));
+	}
     function SendResult(result)
     {
-      $.post("result.php",
-        {
-          amountRightAnswersLevel1: result.rightAnswersLevel1,
-          amountRightAnswersLevel2: result.rightAnswersLevel2_1,
-          amountRightAnswersLevel3: result.rightAnswersLevel2_2,
-          amountWrongAnswersLevel1: result.wrongAnswersLevel1,
-          amountWrongAnswersLevel2: result.wrongAnswersLevel2_1,
-          amountWrongAnswersLevel3: result.wrongAnswersLevel2_2,
-          timeForTest: result.test.AMOUNT_TIME_FOR_TEST_IN_SECONDS,
-          timeForTask: result.test.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS / 1000
-        });
+		$.ajax({
+			async: false,
+			url: "result.php",
+			type: "POST",
+			data: {
+				amountRightAnswersLevel1: result.rightAnswersLevel1,
+			  amountRightAnswersLevel2: result.rightAnswersLevel2_1,
+			  amountRightAnswersLevel3: result.rightAnswersLevel2_2,
+			  amountWrongAnswersLevel1: result.wrongAnswersLevel1,
+			  amountWrongAnswersLevel2: result.wrongAnswersLevel2_1,
+			  amountWrongAnswersLevel3: result.wrongAnswersLevel2_2,
+			  timeForTest: result.test.AMOUNT_TIME_FOR_TEST_IN_SECONDS,
+			  timeForTask: result.test.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS / 1000
+			}
+      })
     }
 
     //оказать рабочую область - задания, кнопки выбора, таймер
@@ -513,7 +526,39 @@ $(document).ready(function () {
     $('#start_counter').fadeOut();
 
     $('.info').delay(4500).fadeOut();
-
-
   }
 });
+function parserSettings(data)
+{
+	var times = JSON.parse(data);
+	CAMOUNT_TIME_FOR_TEST_IN_SECONDS = times.TimeForTest;
+	AMOUNT_TIME_ON_ANSWER_IN_SECONDS = times.TimeForTask;
+}
+
+function getTestSettings()
+{
+	$.ajax(
+				{
+					url: "SendSettingsFromSite.php", 
+					type: "POST", 
+					success: function(data) 
+					{
+						parserSettings(data);
+					}
+
+				});
+}
+
+function addResultsToCommonTable(result){
+
+	$.ajax(
+	{
+		url: "AddCommonResult.php",
+		type: "POST", 
+		data: 
+		 { 
+			result:result,
+			version: "site version"
+		 }
+	});
+}

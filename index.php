@@ -2,9 +2,7 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("catsanddogs");
 
-?>
-
-<link href="style.css" rel="stylesheet">
+?><link href="style.css" rel="stylesheet">
 <div class="content">
 	<div class="info">
 		<b id="notice"></b>
@@ -22,10 +20,8 @@ $APPLICATION->SetTitle("catsanddogs");
 
     				<div class="rules" id="rules">
     					<img src="Vopros.jpg" width="40">
-    					<p>Задание предназначено для тренировки рассеянного внимания. Вам необходимо определить какой канал задействован при возникновении источника информации: зрительный или слуховой.
-    					</p><p> Чтобы начать упражнение,
-    					выберите уровень сложности. Первый уровень  - самый легкий необходимо нажимать кнопку, соответсвующую изображению.
-    					Второй уровень предполагает наличие конкурирующих каналов. Необходимо выбирать то, что изображено на рисунке.</p>
+    					<p>Задание предназначено для тренировки распределнного внимания. Вам необходимо определить какой канал задействован при возникновении источника информации: зрительный или слуховой.
+    					</p><p> Вам предстоит пройти несколько уровней, различающихся по сложности. Более подробная информация будет представлена непосредственно перед началом уровня.</p>
                         <br><input class="butt next" id="next" type = "submit" value = "Далее">
     				</div>
     	</div>
@@ -49,8 +45,8 @@ $APPLICATION->SetTitle("catsanddogs");
             <p class="finish">Инструкция</p>
             <div class="rules">
                 <p class="percent instruction"></p>
+			</div>
             <input class="butt go" type = "submit" id="go" value = "Все понятно">
-            </div>
         </div>
 
         <div id='start_counter'></div>
@@ -70,4 +66,6 @@ $APPLICATION->SetTitle("catsanddogs");
 <script src="jquery-3.3.1.min.js"></script>
 <script src="./lib/moment.js"></script>
 <script src="script.js?rndstr=<%= getRandomStr() %>"></script>
+<? include 'result.php'; ?>
+
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

@@ -1,9 +1,10 @@
 <?php
-    $dirDog = "assets/image/Dog";
-    $dirCat = "assets/image/Cat";
+	$dirDog = "assets/image/Dog";
+	$dirCat = "assets/image/Cat";
     $dirAudioDog = "assets/audio/Dog";
     $dirAudioCat = "assets/audio/Cat";
     $dh  = opendir($dirCat);
+
     while (false !== ($filename = readdir($dh))) {
     if ($filename != "." && $filename != ".." && $filename != ".section.php") {
                 $imagesCat[] = array("fileName" => "{$dirCat}/{$filename}", "type" => "cat");
