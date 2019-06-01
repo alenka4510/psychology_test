@@ -65,7 +65,7 @@ $APPLICATION->SetTitle("catsanddogs");
 
 <script src="jquery-3.3.1.min.js"></script>
 <script src="./lib/moment.js"></script>
-<script src="script.js?rndstr=<%= getRandomStr() %>"></script>
+<script src="script.js?rndstr=<?php echo time(); ?>"></script>
 <? include 'result.php'; ?>
 
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

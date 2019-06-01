@@ -1,5 +1,5 @@
 ﻿var AMOUNT_TIME_ON_ANSWER_IN_SECONDS = 2;
-var CAMOUNT_TIME_FOR_TEST_IN_SECONDS = 10;
+var CAMOUNT_TIME_FOR_TEST_IN_SECONDS = 5;
 
 class Test {
   constructor(options) {
@@ -21,7 +21,7 @@ class Test {
     this.level = 0;
     this.nextTaskTimeout = undefined;
     this.result = new Result(),
-    this.rightAnswersLevel1 = 0;
+      this.rightAnswersLevel1 = 0;
     this.wrongAnswersLevel1 = 0;
     this.rightAnswersLevel2_1 = 0;
     this.wrongAnswersLevel2_1 = 0;
@@ -30,10 +30,13 @@ class Test {
     this.amountTasksLevel1 = 0;
     this.amountTasksLevel2_1 = 0;
     this.amountTasksLevel2_2 = 0;
-	this.answersTimes;
-	this.reaction;
+    this.answersTimes;
+    this.taskStartTime = undefined;
+    this.passedTasks = [];
+    this.reactionTime = [];
+    this.tasksInTest = [];
 
-	this.firstTime = true;
+    this.firstTime = true;
   };
 
   setLevel(newLevel) {
@@ -47,17 +50,17 @@ class Test {
   }
 
   nextTaskLevel1() {
+    this.taskStartTime = performance.now();
+    // const startTime = performance.now();
+    // this.tasksInTest.push(this.task);
+    // if (!this.taskStartTime) {
+    //   this.taskStartTime = startTime;
+    // } else {
+    //   this.reactionTime.push((startTime - this.taskStartTime).toFixed(0));
+    //   this.taskStartTime = startTime;
+    //   console.log({reactionTime: this.reactionTime, task: this.task});
+    // }
 
-	if(this.firstTime)
-	{
-		this.firstTime = false;
-		this.reaction = performance.now();
-	}
-	else
-	{
-		this.reaction = performance.now() - this.reaction;
-		console.log({reaction : this.reaction});
-	}
 
     this.amountTasks++;
     if (this.testIsEnded) {
@@ -65,9 +68,10 @@ class Test {
     }
 
     if (this.task.audio) {
-		this.task.audio.pause();
+      this.task.audio.pause();
     }
 
+    this.task = new Task();
     this.task.clearTaskImage();
     this.task.clearTask();
     let index = this.selfRandom(0, this.tasks.length - 1);
@@ -78,7 +82,7 @@ class Test {
       return;
     }
 
-    let taskFileImage = taskFile;
+    const taskFileImage = taskFile;
     if (taskFile.split('.')[1] === 'mp3') {
       this.task.playAudio(taskFile);
       this.task.type = task.type;
@@ -87,6 +91,7 @@ class Test {
       this.task.image = taskFileImage;
       this.task.type = task.type;
     }
+    console.log({taskFile});
 
     this.task.addTaskImage(this.task.image);
   };
@@ -98,9 +103,9 @@ class Test {
         return;
       }
 
-      if (this.task.audio) {
-		this.task.audio.pause();
-      }
+      // if (this.task.audio) {
+      //   this.task.audio.src = '';
+      // }
 
       this.task.clearTaskImage();
       this.task.clearTask();
@@ -124,14 +129,20 @@ class Test {
   }
 
   checkAnswerProcess(answer) {
+    const startTime = performance.now();
+    const reactionTime = (startTime - this.taskStartTime).toFixed(0);
+    this.taskStartTime = startTime;
+
     if (this.checkAnswer(answer)) {
       this.rightAnswers++;
+      this.passedTasks.push({ task: this.task, answer: 'right', reactionTime });
     } else {
       this.wrongAnswers++;
+      this.passedTasks.push({ task: this.task, answer: 'wrong', reactionTime });
     }
 
     clearInterval(this.nextTaskTimeout);
-    console.log({cleareInterval:this.nextTaskTimeout})
+    console.log({cleareInterval: this.nextTaskTimeout});
     this.nextTaskTimeout = setInterval(this.nextTask.bind(this), this.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS);
     console.log({checkAnswerProcess_createdTimer: this.nextTaskTimeout});
     this.nextTask();
@@ -147,13 +158,13 @@ class Test {
 
   getDataTest() {
     var response = $.ajax({
-        async: false,
-        url: "dataTest.php",
-        type: "POST",
-        success: function (data){
-          return data;
-        }
-      }).responseText;
+      async: false,
+      url: "dataTest.php",
+      type: "POST",
+      success: function (data) {
+        return data;
+      }
+    }).responseText;
 
     const serverResponse = JSON.parse(response).result;
 
@@ -219,7 +230,7 @@ class Test {
 class Task {
   constructor() {
     this.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS = AMOUNT_TIME_ON_ANSWER_IN_SECONDS * 1000;
-    this.audio = new Audio;
+    this.audio = new Audio();
     this.type = undefined;
     this.audioImage = './assets/image/audio.jpg';
     this.image = undefined;
@@ -233,9 +244,10 @@ class Task {
   playAudio(fileName) {
     try {
       console.log({1: 'playaudio'});
-	  this.audio.setAttribute('src',fileName);
-	  //this.audio.src = fileName;
-this.audio.load();
+      this.audio.pause();
+      this.audio = new Audio();
+      this.audio.src = fileName;
+      this.audio.load();
       this.audio.play();
     } catch (err) {
       console.log({err});
@@ -293,6 +305,8 @@ class Timer {
     $(".percent").append(`Кол-во правильных ответов: ${this.test.rightAnswers}<br>`);
     $(".percent").append(`Кол-во ошибочных ответов: ${this.test.wrongAnswers}<br>`);
     //$(".percent").append(`Кол-во заданий: ${this.test.amountTasks - 1}`);
+
+    console.log({ passed: this.test.passedTasks, tasks: this.test.tasksInTest });
   };
 }
 
@@ -407,8 +421,6 @@ $(document).ready(function () {
           test.nextTask();
           test.timer = new Timer(test);
           test.setIntervalForNextTask();
-			test.reaction = performance.now();
-			console.log(test.reaction);
         }
         console.log(seconds);
         $('#start_counter').html(seconds);
@@ -424,8 +436,8 @@ $(document).ready(function () {
         $('#nextLevel').remove();
         $(".return-tests").fadeIn();
         SendResult(result);
-		const res = CalcPercentRightAnswers(result);
-		addResultsToCommonTable(res);
+        const res = CalcPercentRightAnswers(result);
+        addResultsToCommonTable(res);
         return;
       }
       test.maskResultBlock();
@@ -450,37 +462,36 @@ $(document).ready(function () {
       }
     }
 
-	function CalcPercentRightAnswers(result)
-	{
-		amountRightAnswersLevel1 = result.rightAnswersLevel1;
-          amountRightAnswersLevel2 = result.rightAnswersLevel2_1;
-          amountRightAnswersLevel3 = result.rightAnswersLevel2_2;
-          amountWrongAnswersLevel1 = result.wrongAnswersLevel1;
-          amountWrongAnswersLevel2 = result.wrongAnswersLevel2_1;
-          amountWrongAnswersLevel3 = result.wrongAnswersLevel2_2;
+    function CalcPercentRightAnswers(result) {
+      amountRightAnswersLevel1 = result.rightAnswersLevel1;
+      amountRightAnswersLevel2 = result.rightAnswersLevel2_1;
+      amountRightAnswersLevel3 = result.rightAnswersLevel2_2;
+      amountWrongAnswersLevel1 = result.wrongAnswersLevel1;
+      amountWrongAnswersLevel2 = result.wrongAnswersLevel2_1;
+      amountWrongAnswersLevel3 = result.wrongAnswersLevel2_2;
 
-		const amountTasks = result.amountTasksLevel1 + result.amountTasksLevel2_1 + result.amountTasksLevel2_2;
-		const allRight =amountRightAnswersLevel1 + amountRightAnswersLevel2 + amountRightAnswersLevel3;
-		const allWrong =amountWrongAnswersLevel1+amountWrongAnswersLevel2+amountWrongAnswersLevel3;
+      const amountTasks = result.amountTasksLevel1 + result.amountTasksLevel2_1 + result.amountTasksLevel2_2;
+      const allRight = amountRightAnswersLevel1 + amountRightAnswersLevel2 + amountRightAnswersLevel3;
+      const allWrong = amountWrongAnswersLevel1 + amountWrongAnswersLevel2 + amountWrongAnswersLevel3;
 
-		return String(Math.ceil(allRight * 100 / amountTasks).toPrecision(2));
-	}
-    function SendResult(result)
-    {
-		$.ajax({
-			async: false,
-			url: "result.php",
-			type: "POST",
-			data: {
-				amountRightAnswersLevel1: result.rightAnswersLevel1,
-			  amountRightAnswersLevel2: result.rightAnswersLevel2_1,
-			  amountRightAnswersLevel3: result.rightAnswersLevel2_2,
-			  amountWrongAnswersLevel1: result.wrongAnswersLevel1,
-			  amountWrongAnswersLevel2: result.wrongAnswersLevel2_1,
-			  amountWrongAnswersLevel3: result.wrongAnswersLevel2_2,
-			  timeForTest: result.test.AMOUNT_TIME_FOR_TEST_IN_SECONDS,
-			  timeForTask: result.test.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS / 1000
-			}
+      return String(Math.ceil(allRight * 100 / amountTasks).toPrecision(2));
+    }
+
+    function SendResult(result) {
+      $.ajax({
+        async: false,
+        url: "result.php",
+        type: "POST",
+        data: {
+          amountRightAnswersLevel1: result.rightAnswersLevel1,
+          amountRightAnswersLevel2: result.rightAnswersLevel2_1,
+          amountRightAnswersLevel3: result.rightAnswersLevel2_2,
+          amountWrongAnswersLevel1: result.wrongAnswersLevel1,
+          amountWrongAnswersLevel2: result.wrongAnswersLevel2_1,
+          amountWrongAnswersLevel3: result.wrongAnswersLevel2_2,
+          timeForTest: result.test.AMOUNT_TIME_FOR_TEST_IN_SECONDS,
+          timeForTask: result.test.task.AMOUNT_TIME_FOR_TASK_IN_MILLISECONDS / 1000
+        }
       })
     }
 
@@ -510,8 +521,7 @@ $(document).ready(function () {
       ShowWorkPlace();
     };
 
-    function hideInstruction()
-    {
+    function hideInstruction() {
       $('#infoAboutLevel').delay().fadeOut();
       $('#go').delay().fadeOut();
     }
@@ -528,37 +538,33 @@ $(document).ready(function () {
     $('.info').delay(4500).fadeOut();
   }
 });
-function parserSettings(data)
-{
-	var times = JSON.parse(data);
-	CAMOUNT_TIME_FOR_TEST_IN_SECONDS = times.TimeForTest;
-	AMOUNT_TIME_ON_ANSWER_IN_SECONDS = times.TimeForTask;
+function parserSettings(data) {
+  var times = JSON.parse(data);
+  CAMOUNT_TIME_FOR_TEST_IN_SECONDS = times.TimeForTest;
+  AMOUNT_TIME_ON_ANSWER_IN_SECONDS = times.TimeForTask;
 }
 
-function getTestSettings()
-{
-	$.ajax(
-				{
-					url: "SendSettingsFromSite.php", 
-					type: "POST", 
-					success: function(data) 
-					{
-						parserSettings(data);
-					}
+function getTestSettings() {
+  $.ajax(
+    {
+      url: "SendSettingsFromSite.php",
+      type: "POST",
+      success: function (data) {
+        parserSettings(data);
+      }
 
-				});
+    });
 }
 
-function addResultsToCommonTable(result){
+function addResultsToCommonTable(result) {
 
-	$.ajax(
-	{
-		url: "AddCommonResult.php",
-		type: "POST", 
-		data: 
-		 { 
-			result:result,
-			version: "site version"
-		 }
-	});
+  $.ajax(
+    {
+      url: "AddCommonResult.php",
+      type: "POST",
+      data: {
+        result: result,
+        version: "site version"
+      }
+    });
 }
